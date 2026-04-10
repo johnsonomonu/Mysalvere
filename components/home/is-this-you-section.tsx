@@ -60,8 +60,7 @@ export function IsThisYouSection() {
           </FadeInUp>
           <FadeInUp delay={0.2}>
             <p className="mt-6 text-xl leading-8 text-[#57534E]">
-              You&apos;re not alone. These are the most common challenges we help our 
-              clients overcome.
+              Over 65% of Nigerians have 1 or more of these chronic issues.
             </p>
           </FadeInUp>
         </div>

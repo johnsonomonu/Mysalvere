@@ -44,7 +44,7 @@ export function AssessmentSection() {
                 Discover What&apos;s Really Going On With Your Health
               </h2>
               <p className="mt-6 text-lg text-white/90 max-w-2xl mx-auto font-light">
-                Answer 12 quick questions to uncover the root causes behind your symptoms and get a personalized wellness snapshot.
+                Answer 14 quick questions to uncover the root causes behind your symptoms and get a personalized wellness snapshot.
               </p>
             </FadeInUp>
           </div>
@@ -75,7 +75,7 @@ export function AssessmentSection() {
                   </Link>
                 </Button>
                 <p className="text-xs text-[#A8A29E] font-medium uppercase tracking-widest">
-                  12 questions. 100% confidential. Your information is never shared.
+                  14 questions. 100% confidential. Your information is never shared.
                 </p>
               </div>
             </FadeInUp>

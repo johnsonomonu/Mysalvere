@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
+import { BookSessionButton } from "@/components/book-session-button"
 import { Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -58,9 +59,9 @@ export function Header() {
         </div>
         
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-4">
-          <Button variant="vital" size="sm" className="rounded-full px-6 shadow-none" asChild>
-            <Link href="/book">Book a Session</Link>
-          </Button>
+          <BookSessionButton size="sm" className="rounded-full px-6 shadow-none">
+            Book a Session
+          </BookSessionButton>
         </div>
       </nav>
 
@@ -104,11 +105,12 @@ export function Header() {
                 ))}
               </div>
               <div className="py-8 space-y-4">
-                <Button variant="vital" className="w-full rounded-2xl h-14 text-lg" asChild>
-                  <Link href="/book" onClick={() => setMobileMenuOpen(false)}>
-                    Book a Session
-                  </Link>
-                </Button>
+                <BookSessionButton
+                  className="w-full rounded-2xl h-14 text-lg"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Book a Session
+                </BookSessionButton>
               </div>
             </div>
           </div>

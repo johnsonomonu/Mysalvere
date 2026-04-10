@@ -1,170 +1,210 @@
 import { z } from "zod"
 
-// ─── 12 Assessment Questions (inspired by Wholly Health) ───
+// ─── 14 Assessment Questions (aligned to website brief) ───
+export type AssessmentCategory =
+  | "sleep"
+  | "energy"
+  | "mental"
+  | "stress"
+  | "hormones"
+  | "gut"
+  | "inflammation"
+
+type OptionImpact = Partial<Record<AssessmentCategory, number>>
+
+interface AssessmentOption {
+  value: number
+  label: string
+  impact: OptionImpact
+}
+
 export interface AssessmentQuestion {
   id: string
-  category: string
+  category: AssessmentCategory
   categoryLabel: string
   question: string
-  options: { value: number; label: string }[]
+  options: AssessmentOption[]
 }
 
 export const assessmentQuestions: AssessmentQuestion[] = [
-  // ── Chronic Health / Blood Sugar ──
   {
-    id: "blood_sugar",
-    category: "chronic_health",
-    categoryLabel: "Chronic Health",
-    question: "How would you describe your blood sugar or metabolic health?",
+    id: "wake_feel",
+    category: "sleep",
+    categoryLabel: "Sleep Quality",
+    question: "How do you feel when you wake up?",
     options: [
-      { value: 1, label: "No issues — my levels are stable and healthy" },
-      { value: 2, label: "Occasional sugar cravings or energy dips after meals" },
-      { value: 3, label: "Frequent energy crashes, diagnosed pre-diabetes, or on medication" },
-      { value: 4, label: "Managing diabetes or chronic metabolic condition daily" },
+      { value: 1, label: "Fully rested", impact: { sleep: 0, energy: 0 } },
+      { value: 2, label: "Slightly tired", impact: { sleep: 1, energy: 1 } },
+      { value: 3, label: "Tired most mornings", impact: { sleep: 2, energy: 2 } },
+      { value: 4, label: "Exhausted no matter what", impact: { sleep: 3, energy: 3, stress: 3 } },
     ],
   },
   {
-    id: "medication_dependency",
-    category: "chronic_health",
-    categoryLabel: "Chronic Health",
-    question: "How dependent are you on medication or supplements?",
-    options: [
-      { value: 1, label: "I rarely take any medication" },
-      { value: 2, label: "Occasional supplements or over-the-counter meds" },
-      { value: 3, label: "Daily medication for one or more conditions" },
-      { value: 4, label: "Multiple daily medications — I can't function without them" },
-    ],
-  },
-
-  // ── Energy & Vitality ──
-  {
-    id: "energy_levels",
+    id: "day_energy",
     category: "energy",
     categoryLabel: "Energy & Vitality",
-    question: "How would you rate your energy levels throughout the day?",
+    question: "How is your energy during the day?",
     options: [
-      { value: 1, label: "Consistently high — I feel energized all day" },
-      { value: 2, label: "Generally good with minor afternoon dips" },
-      { value: 3, label: "Low energy with frequent crashes" },
-      { value: 4, label: "Exhausted most of the time regardless of sleep" },
+      { value: 1, label: "Stable", impact: { energy: 0 } },
+      { value: 2, label: "Slight dips", impact: { energy: 1 } },
+      { value: 3, label: "Noticeable crashes", impact: { energy: 2, hormones: 2 } },
+      { value: 4, label: "Constant fatigue", impact: { energy: 3, stress: 3 } },
     ],
   },
   {
-    id: "stimulant_reliance",
-    category: "energy",
-    categoryLabel: "Energy & Vitality",
-    question: "How often do you rely on caffeine or sugar to get through the day?",
+    id: "focus_clarity",
+    category: "mental",
+    categoryLabel: "Mental Clarity",
+    question: "How would you describe your focus?",
     options: [
-      { value: 1, label: "Rarely — I don't need stimulants" },
-      { value: 2, label: "1 cup of coffee in the morning" },
-      { value: 3, label: "Multiple cups of coffee or energy drinks daily" },
-      { value: 4, label: "I can't function without constant caffeine and sugar" },
+      { value: 1, label: "Sharp", impact: { mental: 0 } },
+      { value: 2, label: "Slightly distracted", impact: { mental: 1 } },
+      { value: 3, label: "Often struggle", impact: { mental: 2, stress: 2 } },
+      { value: 4, label: "Mentally slow or foggy", impact: { mental: 3, stress: 3 } },
     ],
   },
-
-  // ── Digestive Wellness ──
-  {
-    id: "digestion",
-    category: "digestive",
-    categoryLabel: "Digestive Wellness",
-    question: "How would you describe your digestive health?",
-    options: [
-      { value: 1, label: "Excellent — no issues at all" },
-      { value: 2, label: "Occasional bloating or discomfort" },
-      { value: 3, label: "Frequent bloating, gas, or irregular bowel movements" },
-      { value: 4, label: "Chronic digestive issues (IBS, acid reflux, food sensitivities)" },
-    ],
-  },
-  {
-    id: "food_sensitivity",
-    category: "digestive",
-    categoryLabel: "Digestive Wellness",
-    question: "Do you experience food sensitivities or reactions after eating?",
-    options: [
-      { value: 1, label: "No — I can eat anything without issues" },
-      { value: 2, label: "A few foods bother me occasionally" },
-      { value: 3, label: "Several foods cause discomfort or reactions" },
-      { value: 4, label: "I react to most foods and have a very restricted diet" },
-    ],
-  },
-
-  // ── Sleep Quality ──
   {
     id: "sleep_quality",
     category: "sleep",
     categoryLabel: "Sleep Quality",
-    question: "How would you rate your sleep quality?",
+    question: "How is your sleep quality?",
     options: [
-      { value: 1, label: "I sleep deeply and wake refreshed" },
-      { value: 2, label: "Generally good but occasionally restless" },
-      { value: 3, label: "I wake up frequently or have trouble falling asleep" },
-      { value: 4, label: "Chronic insomnia or I never feel rested" },
+      { value: 1, label: "Deep and restful", impact: { sleep: 0 } },
+      { value: 2, label: "Light but okay", impact: { sleep: 1 } },
+      { value: 3, label: "Interrupted", impact: { sleep: 2, stress: 2 } },
+      { value: 4, label: "Poor most nights", impact: { sleep: 3, stress: 3, hormones: 3 } },
     ],
   },
   {
-    id: "sleep_duration",
-    category: "sleep",
-    categoryLabel: "Sleep Quality",
-    question: "How many hours of sleep do you typically get per night?",
+    id: "hormonal_symptoms",
+    category: "hormones",
+    categoryLabel: "Hormonal Balance",
+    question: "Do you experience hormonal symptoms?",
     options: [
-      { value: 1, label: "7-9 hours consistently" },
-      { value: 2, label: "6-7 hours most nights" },
-      { value: 3, label: "5-6 hours or very inconsistent" },
-      { value: 4, label: "Less than 5 hours or extremely disrupted" },
+      { value: 1, label: "None", impact: { hormones: 0 } },
+      { value: 2, label: "Occasional", impact: { hormones: 1 } },
+      { value: 3, label: "Frequent", impact: { hormones: 2 } },
+      { value: 4, label: "Severe or disruptive", impact: { hormones: 3 } },
     ],
   },
-
-  // ── Inflammation & Immunity ──
   {
-    id: "pain_stiffness",
+    id: "food_response",
+    category: "gut",
+    categoryLabel: "Gut Health",
+    question: "How does your body respond to food?",
+    options: [
+      { value: 1, label: "No issues", impact: { gut: 0 } },
+      { value: 2, label: "Occasional bloating", impact: { gut: 1 } },
+      { value: 3, label: "Frequent discomfort", impact: { gut: 2, inflammation: 2 } },
+      { value: 4, label: "Daily bloating or gas", impact: { gut: 3, inflammation: 3 } },
+    ],
+  },
+  {
+    id: "weight_changes",
+    category: "hormones",
+    categoryLabel: "Hormonal Balance",
+    question: "How has your weight been recently?",
+    options: [
+      { value: 1, label: "Stable", impact: { energy: 0 } },
+      { value: 2, label: "Slight fluctuations", impact: { energy: 1 } },
+      { value: 3, label: "Unexplained gain", impact: { hormones: 2, energy: 2 } },
+      { value: 4, label: "Persistent gain", impact: { hormones: 3, inflammation: 3 } },
+    ],
+  },
+  {
+    id: "stress_frequency",
+    category: "stress",
+    categoryLabel: "Stress & Emotional Health",
+    question: "How often do you feel stressed?",
+    options: [
+      { value: 1, label: "Rarely", impact: { stress: 0 } },
+      { value: 2, label: "Sometimes", impact: { stress: 1 } },
+      { value: 3, label: "Often", impact: { stress: 2, hormones: 2 } },
+      { value: 4, label: "Constantly overwhelmed", impact: { stress: 3, hormones: 3 } },
+    ],
+  },
+  {
+    id: "inflammation_frequency",
     category: "inflammation",
     categoryLabel: "Inflammation & Immunity",
-    question: "Do you experience joint pain, muscle aches, or stiffness?",
+    question: "How often do you feel inflamed or get sick?",
     options: [
-      { value: 1, label: "No pain or stiffness" },
-      { value: 2, label: "Occasional mild aches after activity" },
-      { value: 3, label: "Regular pain that limits some activities" },
-      { value: 4, label: "Chronic pain that significantly impacts daily life" },
+      { value: 1, label: "Rarely", impact: { inflammation: 0 } },
+      { value: 2, label: "Occasionally", impact: { inflammation: 1 } },
+      { value: 3, label: "Frequently", impact: { inflammation: 2, gut: 2 } },
+      { value: 4, label: "Constant issues", impact: { inflammation: 3, gut: 3 } },
     ],
   },
   {
-    id: "illness_frequency",
-    category: "inflammation",
-    categoryLabel: "Inflammation & Immunity",
-    question: "How often do you get sick (colds, infections, etc.)?",
+    id: "post_meal_feeling",
+    category: "gut",
+    categoryLabel: "Gut Health",
+    question: "How do you feel after meals?",
     options: [
-      { value: 1, label: "Rarely — maybe once a year" },
-      { value: 2, label: "A few times a year" },
-      { value: 3, label: "Frequently — every couple of months" },
-      { value: 4, label: "Constantly dealing with illness or recurring infections" },
+      { value: 1, label: "Energized", impact: { energy: 0 } },
+      { value: 2, label: "Slightly tired", impact: { energy: 1 } },
+      { value: 3, label: "Sluggish", impact: { energy: 2, gut: 2 } },
+      { value: 4, label: "Very tired or bloated", impact: { energy: 3, gut: 3, hormones: 3 } },
     ],
   },
-
-  // ── Mental Clarity ──
   {
-    id: "mental_clarity",
+    id: "mental_fog_frequency",
     category: "mental",
     categoryLabel: "Mental Clarity",
-    question: "How would you describe your mental clarity and focus?",
+    question: "How often do you experience mental fog?",
     options: [
-      { value: 1, label: "Sharp and focused throughout the day" },
-      { value: 2, label: "Generally clear with occasional foggy moments" },
-      { value: 3, label: "Frequent brain fog that affects productivity" },
-      { value: 4, label: "Severe brain fog, memory issues, and inability to concentrate" },
+      { value: 1, label: "Rarely", impact: { mental: 0 } },
+      { value: 2, label: "Occasionally", impact: { mental: 1 } },
+      { value: 3, label: "Frequently", impact: { mental: 2 } },
+      { value: 4, label: "Almost daily", impact: { mental: 3, stress: 3 } },
     ],
   },
-
-  // ── Stress & Emotional Health ──
+  {
+    id: "demanding_tasks",
+    category: "mental",
+    categoryLabel: "Mental Clarity",
+    question: "How do you perform during demanding tasks?",
+    options: [
+      { value: 1, label: "Clear", impact: { mental: 0 } },
+      { value: 2, label: "Slight dips", impact: { mental: 1 } },
+      { value: 3, label: "Noticeable difficulty", impact: { mental: 2 } },
+      { value: 4, label: "Easily overwhelmed", impact: { mental: 3, stress: 3 } },
+    ],
+  },
+  {
+    id: "fall_asleep_time",
+    category: "sleep",
+    categoryLabel: "Sleep Quality",
+    question: "How long does it take you to fall asleep?",
+    options: [
+      { value: 1, label: "Less than 15 minutes", impact: { sleep: 0 } },
+      { value: 2, label: "15 to 30 minutes", impact: { sleep: 1 } },
+      { value: 3, label: "30 to 60 minutes", impact: { sleep: 2, stress: 2 } },
+      { value: 4, label: "More than 60 minutes", impact: { sleep: 3, stress: 3, hormones: 3 } },
+    ],
+  },
+  {
+    id: "sleep_disruption",
+    category: "sleep",
+    categoryLabel: "Sleep Quality",
+    question: "What happens during your sleep?",
+    options: [
+      { value: 1, label: "Sleep through", impact: { sleep: 0 } },
+      { value: 2, label: "Wake once", impact: { sleep: 1 } },
+      { value: 3, label: "Wake multiple times", impact: { sleep: 2, stress: 2 } },
+      { value: 4, label: "Frequent waking", impact: { sleep: 3, stress: 3, hormones: 3 } },
+    ],
+  },
   {
     id: "stress_management",
     category: "stress",
     categoryLabel: "Stress & Emotional Health",
-    question: "How well do you manage stress in your daily life?",
+    question: "How well do you recover after a stressful day?",
     options: [
-      { value: 1, label: "I handle stress well and recover quickly" },
-      { value: 2, label: "I manage okay but feel overwhelmed sometimes" },
-      { value: 3, label: "I'm frequently stressed and it affects my health" },
-      { value: 4, label: "I feel constantly overwhelmed and burned out" },
+      { value: 1, label: "I recover quickly", impact: { stress: 0 } },
+      { value: 2, label: "I need some time to recover", impact: { stress: 1 } },
+      { value: 3, label: "Stress lingers into the next day", impact: { stress: 2, hormones: 2 } },
+      { value: 4, label: "I rarely feel fully recovered", impact: { stress: 3, hormones: 3 } },
     ],
   },
 ]
@@ -193,52 +233,91 @@ export interface AssessmentResult {
   recommendations: string[]
 }
 
-const categoryMeta: Record<string, string> = {
-  chronic_health: "Chronic Health",
-  energy: "Energy & Vitality",
-  digestive: "Digestive Wellness",
+const categoryMeta: Record<AssessmentCategory, string> = {
   sleep: "Sleep Quality",
-  inflammation: "Inflammation & Immunity",
+  energy: "Energy & Vitality",
   mental: "Mental Clarity",
   stress: "Stress & Emotional Health",
+  hormones: "Hormonal Balance",
+  gut: "Gut Health",
+  inflammation: "Inflammation & Immunity",
 }
 
 export function calculateAssessmentResult(data: AssessmentFormValues): AssessmentResult {
-  // Group answers by category
-  const categoryGroups: Record<string, number[]> = {}
+  const categoryScoresMap: Record<AssessmentCategory, number> = {
+    sleep: 0,
+    energy: 0,
+    mental: 0,
+    stress: 0,
+    hormones: 0,
+    gut: 0,
+    inflammation: 0,
+  }
 
-  for (const q of assessmentQuestions) {
-    const answer = data.answers[q.id]
-    if (answer !== undefined) {
-      if (!categoryGroups[q.category]) categoryGroups[q.category] = []
-      categoryGroups[q.category].push(answer)
+  const categoryMaxMap: Record<AssessmentCategory, number> = {
+    sleep: 0,
+    energy: 0,
+    mental: 0,
+    stress: 0,
+    hormones: 0,
+    gut: 0,
+    inflammation: 0,
+  }
+
+  for (const question of assessmentQuestions) {
+    const selectedValue = data.answers[question.id]
+
+    const maxImpactForQuestion: OptionImpact = {}
+    for (const option of question.options) {
+      for (const [category, points] of Object.entries(option.impact)) {
+        const key = category as AssessmentCategory
+        const existing = maxImpactForQuestion[key] ?? 0
+        maxImpactForQuestion[key] = Math.max(existing, points ?? 0)
+      }
+    }
+
+    for (const [category, points] of Object.entries(maxImpactForQuestion)) {
+      categoryMaxMap[category as AssessmentCategory] += points ?? 0
+    }
+
+    if (selectedValue === undefined) {
+      continue
+    }
+
+    const selectedOption = question.options.find((option) => option.value === selectedValue)
+    if (!selectedOption) {
+      continue
+    }
+
+    for (const [category, points] of Object.entries(selectedOption.impact)) {
+      categoryScoresMap[category as AssessmentCategory] += points ?? 0
     }
   }
 
-  // Calculate category scores
-  const categoryScores: CategoryScore[] = Object.entries(categoryGroups).map(([category, scores]) => {
-    const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length
-    const percentage = Math.round(((avgScore - 1) / 3) * 100) // 1=0%, 4=100%
-    
+  const categoryScores: CategoryScore[] = (Object.keys(categoryScoresMap) as AssessmentCategory[]).map((category) => {
+    const score = categoryScoresMap[category]
+    const maxScore = categoryMaxMap[category]
+    const percentage = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0
+
     let level: CategoryScore["level"]
-    if (avgScore <= 1.5) level = "good"
-    else if (avgScore <= 2.5) level = "moderate"
-    else if (avgScore <= 3.5) level = "concerning"
+    if (percentage <= 25) level = "good"
+    else if (percentage <= 50) level = "moderate"
+    else if (percentage <= 75) level = "concerning"
     else level = "critical"
 
     return {
       category,
-      label: categoryMeta[category] || category,
-      score: Math.round(avgScore * 10) / 10,
+      label: categoryMeta[category],
+      score,
       percentage,
       level,
     }
   })
 
-  // Overall score (inverted: lower average = better health = higher score)
-  const allScores = Object.values(data.answers)
-  const overallAvg = allScores.reduce((a, b) => a + b, 0) / allScores.length
-  const overallScore = Math.round(((4 - overallAvg) / 3) * 100) // 1=100 (great), 4=0 (critical)
+  const totalConcern = categoryScores.reduce((sum, item) => sum + item.score, 0)
+  const totalMaxConcern = Object.values(categoryMaxMap).reduce((sum, item) => sum + item, 0)
+  const concernPercentage = totalMaxConcern > 0 ? Math.round((totalConcern / totalMaxConcern) * 100) : 0
+  const overallScore = Math.max(0, 100 - concernPercentage)
 
   // Priority areas — categories with highest concern
   const priorityAreas = [...categoryScores]
@@ -248,9 +327,9 @@ export function calculateAssessmentResult(data: AssessmentFormValues): Assessmen
 
   // Impact level
   let impactLevel: AssessmentResult["impactLevel"]
-  if (overallAvg <= 1.5) impactLevel = "low"
-  else if (overallAvg <= 2.5) impactLevel = "moderate"
-  else if (overallAvg <= 3.25) impactLevel = "high"
+  if (concernPercentage <= 25) impactLevel = "low"
+  else if (concernPercentage <= 50) impactLevel = "moderate"
+  else if (concernPercentage <= 75) impactLevel = "high"
   else impactLevel = "severe"
 
   // Generate recommendations
@@ -274,13 +353,10 @@ function generateRecommendations(
 
   for (const c of concerning) {
     switch (c.category) {
-      case "chronic_health":
-        recommendations.push("Focus on blood sugar stabilization through whole foods and reduced processed carbohydrates")
-        break
       case "energy":
         recommendations.push("Reduce stimulant dependency by optimizing nutrition, sleep, and meal timing")
         break
-      case "digestive":
+      case "gut":
         recommendations.push("Address digestive health through an elimination protocol and gut-healing nutrition")
         break
       case "sleep":
@@ -294,6 +370,9 @@ function generateRecommendations(
         break
       case "stress":
         recommendations.push("Implement daily stress management practices — breathwork, movement, and boundaries")
+        break
+      case "hormones":
+        recommendations.push("Support hormonal balance through stress regulation, blood sugar stability, and restorative sleep")
         break
     }
   }

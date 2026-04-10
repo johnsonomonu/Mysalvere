@@ -22,7 +22,7 @@ export function Footer() {
     <footer className="bg-[#1C1917] text-[#F5F5F4] relative overflow-hidden">
       <div className="absolute bottom-0 left-0 w-full h-1 bg-[var(--vital-green)]" />
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="inline-block group">
@@ -31,7 +31,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-6 text-base leading-relaxed text-[#A8A29E]">
-              Helping you build sustainable health and performance through functional nutrition and lifestyle medicine.
+              Helping you build sustainable health and performance
             </p>
             <div className="mt-8 flex flex-col gap-3 text-sm text-[#A8A29E]">
               <a href="mailto:info@mysalvere.com" className="flex items-center gap-2 hover:text-[var(--vital-green)] transition-colors">
@@ -94,26 +94,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Newsletter */}
-          <div className="lg:col-span-1">
-            <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-white">Stay Updated</h3>
-            <p className="mt-6 text-sm leading-relaxed text-[#A8A29E]">
-              Join our newsletter for weekly health insights and performance strategies.
-            </p>
-            <form className="mt-6 flex flex-col gap-3">
-              <input
-                type="email"
-                placeholder="Email address"
-                className="w-full rounded-2xl border-0 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-[#57534E] focus:ring-2 focus:ring-[var(--vital-green)] outline-none transition-all duration-300"
-              />
-              <button
-                type="submit"
-                className="w-full rounded-2xl bg-[var(--vital-green)] px-5 py-4 text-sm font-bold text-white hover:bg-[var(--vital-green-hover)] transition-all duration-300 shadow-lg shadow-green-600/10"
-              >
-                Subscribe
-              </button>
-            </form>
-          </div>
         </div>
 
         <div className="mt-20 border-t border-white/5 pt-10">

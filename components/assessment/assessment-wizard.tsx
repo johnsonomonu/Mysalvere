@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useCallback } from "react"
 import {
   assessmentQuestions,
   calculateAssessmentResult,
@@ -9,9 +9,7 @@ import {
 import { QuestionStep } from "./question-step"
 import { ResultsStep } from "./results-step"
 import { SuccessStep } from "./success-step"
-import { GatedResults } from "./gated-results"
 import { FadeInUp } from "@/components/motion"
-import { createClient } from "@/lib/supabase/client"
 
 type Step = "questions" | "results" | "success"
 
@@ -19,20 +17,6 @@ export function AssessmentWizard() {
   const [currentStep, setCurrentStep] = useState<Step>("questions")
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [result, setResult] = useState<AssessmentResult | null>(null)
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const supabase = createClient()
-      if (!supabase) {
-        setIsAuthenticated(false)
-        return
-      }
-      const { data: { session } } = await supabase.auth.getSession()
-      setIsAuthenticated(!!session)
-    }
-    checkAuth()
-  }, [])
 
   const handleAnswer = useCallback((questionId: string, value: number) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }))
@@ -52,7 +36,7 @@ export function AssessmentWizard() {
   const stepIndex = currentStep === "questions" ? 0 : currentStep === "results" ? 1 : 2
 
   const progressSteps = [
-    { id: "questions", title: "Assessment", description: "Answer 12 health questions" },
+    { id: "questions", title: "Assessment", description: "Answer 14 health questions" },
     { id: "results", title: "Results", description: "Your personalized wellness snapshot" },
   ]
 
@@ -113,11 +97,7 @@ export function AssessmentWizard() {
           />
         )}
         {currentStep === "results" && result && (
-          isAuthenticated ? (
-            <ResultsStep result={result} onBack={handleBackToQuestions} />
-          ) : (
-            <GatedResults />
-          )
+          <ResultsStep result={result} onBack={handleBackToQuestions} />
         )}
         {currentStep === "success" && (
           <SuccessStep />

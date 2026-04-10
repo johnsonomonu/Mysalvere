@@ -37,13 +37,13 @@ export function HeroSection() {
             
             <FadeInUp delay={0.1}>
               <h1 className="font-serif text-5xl font-medium tracking-tight text-[#1C1917] sm:text-6xl lg:text-8xl text-balance leading-[1.02]">
-                Staying healthy shouldn&apos;t have to be so hard
+                Staying healthy doesn&apos;t have to be so hard
               </h1>
             </FadeInUp>
             
             <FadeInUp delay={0.2}>
               <p className="mt-10 text-xl lg:text-2xl leading-relaxed text-[#57534E] max-w-xl mx-auto lg:mx-0 text-pretty font-light">
-                We help you manage chronic illnesses and drug-dependent conditions using natural foods and sustainable lifestyle changes.
+                We help our clients manage chronic illnesses and drug-dependent conditions using natural foods and lifestyle changes.
               </p>
             </FadeInUp>
             
