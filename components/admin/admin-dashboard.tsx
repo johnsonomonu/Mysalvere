@@ -9,7 +9,11 @@ import { cn } from "@/lib/utils"
 
 type Tab = "assessments" | "users"
 
-export function AdminDashboard() {
+interface AdminDashboardProps {
+  adminEmail: string
+}
+
+export function AdminDashboard({ adminEmail }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<Tab>("assessments")
 
   return (
@@ -21,7 +25,7 @@ export function AdminDashboard() {
             Admin Dashboard
           </h1>
           <p className="mt-1 text-[#57534E]">
-            Manage users and view all assessment data.
+            Signed in as {adminEmail}. Manage users and view all assessment data.
           </p>
         </div>
       </FadeInUp>

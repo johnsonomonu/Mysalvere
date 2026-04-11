@@ -20,7 +20,6 @@ const footerLinks = {
 export function Footer() {
   return (
     <footer className="bg-[#1C1917] text-[#F5F5F4] relative overflow-hidden">
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-[var(--vital-green)]" />
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Brand */}

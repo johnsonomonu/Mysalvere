@@ -2,12 +2,23 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
+  const protectedPaths = ['/dashboard', '/admin']
+  const isProtectedPath = protectedPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  )
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  // If Supabase is not configured, allow all routes in demo mode
-  // Users can add Supabase via Settings > Integrations to enable auth
+  // Public pages can still render, but protected routes must fail closed.
   if (!supabaseUrl || !supabaseAnonKey) {
+    if (isProtectedPath) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/auth/error'
+      url.searchParams.set('message', 'Authentication is not configured for this environment.')
+      return NextResponse.redirect(url)
+    }
+
     return NextResponse.next({ request })
   }
 
@@ -42,12 +53,6 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protected routes
-  const protectedPaths = ['/dashboard', '/admin']
-  const isProtectedPath = protectedPaths.some((path) =>
-    request.nextUrl.pathname.startsWith(path)
-  )
-
   if (isProtectedPath && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
@@ -57,7 +62,14 @@ export async function updateSession(request: NextRequest) {
 
   // Admin-only routes
   if (request.nextUrl.pathname.startsWith('/admin') && user) {
-    const isAdmin = user.user_metadata?.role === 'ADMIN'
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single()
+
+    const isAdmin = !profileError && profile?.role === 'ADMIN'
+
     if (!isAdmin) {
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'

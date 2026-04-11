@@ -2,12 +2,13 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { FadeInUp } from "@/components/motion"
+import { createClient } from "@/lib/supabase/client"
 import { Eye, EyeOff, ArrowLeft } from "lucide-react"
 
 const loginSchema = z.object({
@@ -19,6 +20,7 @@ type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -31,21 +33,46 @@ export default function LoginPage() {
     resolver: zodResolver(loginSchema),
   })
 
+  const getSafeRedirectPath = () => {
+    const redirect = searchParams.get("redirect")
+
+    if (!redirect || !redirect.startsWith("/") || redirect.startsWith("//")) {
+      return "/dashboard"
+    }
+
+    return redirect
+  }
+
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true)
     setError(null)
 
     try {
-      // Mock login - would use Supabase auth in production
-      console.log("Login attempt:", data.email)
-      
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      
-      // For demo, redirect to dashboard
-      router.push("/dashboard")
+      const supabase = createClient()
+
+      if (!supabase) {
+        setError("Authentication is unavailable. Please contact support.")
+        return
+      }
+
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      })
+
+      if (signInError) {
+        setError(
+          signInError.message.toLowerCase().includes("invalid")
+            ? "Invalid email or password. Please try again."
+            : "Could not sign in right now. Please try again in a moment."
+        )
+        return
+      }
+
+      router.push(getSafeRedirectPath())
+      router.refresh()
     } catch {
-      setError("Invalid email or password. Please try again.")
+      setError("A network error occurred. Please try again.")
     } finally {
       setIsLoading(false)
     }

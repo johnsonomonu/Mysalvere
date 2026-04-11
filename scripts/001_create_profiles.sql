@@ -50,7 +50,7 @@ BEGIN
     new.id,
     new.email,
     COALESCE(new.raw_user_meta_data ->> 'full_name', NULL),
-    COALESCE(new.raw_user_meta_data ->> 'role', 'USER')
+    'USER'
   )
   ON CONFLICT (id) DO NOTHING;
   RETURN new;
@@ -77,3 +77,35 @@ CREATE TRIGGER profiles_updated_at
   BEFORE UPDATE ON public.profiles
   FOR EACH ROW
   EXECUTE FUNCTION public.update_updated_at();
+
+-- Prevent non-admin users from changing roles.
+CREATE OR REPLACE FUNCTION public.prevent_role_self_escalation()
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  requester_role TEXT;
+BEGIN
+  IF NEW.role = OLD.role THEN
+    RETURN NEW;
+  END IF;
+
+  SELECT role INTO requester_role
+  FROM public.profiles
+  WHERE id = auth.uid();
+
+  IF requester_role IS DISTINCT FROM 'ADMIN' THEN
+    RAISE EXCEPTION 'Only admins can change profile roles';
+  END IF;
+
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS profiles_prevent_role_change ON public.profiles;
+CREATE TRIGGER profiles_prevent_role_change
+  BEFORE UPDATE ON public.profiles
+  FOR EACH ROW
+  EXECUTE FUNCTION public.prevent_role_self_escalation();

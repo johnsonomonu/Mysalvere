@@ -8,6 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { FadeInUp } from "@/components/motion"
+import { createClient } from "@/lib/supabase/client"
 import { Eye, EyeOff, ArrowLeft, Check } from "lucide-react"
 
 const signUpSchema = z.object({
@@ -54,16 +55,32 @@ export default function SignUpPage() {
     setError(null)
 
     try {
-      // Mock sign up - would use Supabase auth in production
-      console.log("Sign up attempt:", data.email)
-      
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      
-      // Redirect to success page
+      const supabase = createClient()
+
+      if (!supabase) {
+        setError("Authentication is unavailable. Please contact support.")
+        return
+      }
+
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: data.email,
+        password: data.password,
+        options: {
+          data: {
+            full_name: data.fullName,
+          },
+          emailRedirectTo: `${window.location.origin}/auth/login`,
+        },
+      })
+
+      if (signUpError) {
+        setError(signUpError.message)
+        return
+      }
+
       router.push("/auth/sign-up-success")
     } catch {
-      setError("An error occurred. Please try again.")
+      setError("A network error occurred. Please try again.")
     } finally {
       setIsLoading(false)
     }

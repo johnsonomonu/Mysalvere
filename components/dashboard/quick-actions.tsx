@@ -13,19 +13,19 @@ const actions = [
   {
     label: "Book Session",
     description: "Schedule with your coach",
-    href: "#",
+    href: "/dashboard/appointments",
     icon: Calendar,
   },
   {
     label: "Messages",
     description: "Chat with your support team",
-    href: "#",
+    href: "/dashboard/messages",
     icon: MessageCircle,
   },
   {
     label: "Settings",
     description: "Manage your account",
-    href: "#",
+    href: "/dashboard/settings",
     icon: Settings,
   },
 ]

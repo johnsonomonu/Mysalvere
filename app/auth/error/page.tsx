@@ -2,7 +2,14 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { AlertTriangle, ArrowLeft } from "lucide-react"
 
-export default function AuthErrorPage() {
+interface AuthErrorPageProps {
+  searchParams: Promise<{ message?: string }>
+}
+
+export default async function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
+  const params = await searchParams
+  const message = params.message ?? "Something went wrong during the authentication process. This could be due to an expired link or a technical issue."
+
   return (
     <div className="min-h-screen bg-[#F5F5F4] flex items-center justify-center px-6 py-12">
       <div className="w-full max-w-md text-center">
@@ -14,10 +21,7 @@ export default function AuthErrorPage() {
           Authentication Error
         </h1>
 
-        <p className="mt-4 text-[#57534E]">
-          Something went wrong during the authentication process. 
-          This could be due to an expired link or a technical issue.
-        </p>
+        <p className="mt-4 text-[#57534E]">{message}</p>
 
         <div className="mt-8 flex flex-col gap-4">
           <Button asChild>

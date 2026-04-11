@@ -7,22 +7,24 @@ import { RecentAssessments } from "./recent-assessments"
 import { UpcomingAppointments } from "./upcoming-appointments"
 import { QuickActions } from "./quick-actions"
 
-export function DashboardContent() {
-  // Mock user data - would come from Supabase auth
-  const user = {
-    name: "Sarah",
-    email: "sarah@example.com",
+interface DashboardContentProps {
+  user: {
+    name: string
+    email: string
   }
+}
+
+export function DashboardContent({ user }: DashboardContentProps) {
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+    <div className="py-4 lg:py-6">
       {/* Header */}
       <FadeInUp>
-        <div className="mb-8">
-          <h1 className="font-serif text-3xl font-medium text-[#1C1917]">
+        <div className="mb-10">
+          <h1 className="font-serif text-4xl font-medium leading-tight text-[#1C1917]">
             Welcome back, {user.name}
           </h1>
-          <p className="mt-1 text-[#57534E]">
+          <p className="mt-2 max-w-2xl text-lg text-[#57534E]">
             Track your wellness journey and see your progress over time.
           </p>
         </div>
@@ -34,9 +36,9 @@ export function DashboardContent() {
       </FadeInUp>
 
       {/* Main Grid */}
-      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className="mt-10 grid grid-cols-1 gap-6 xl:grid-cols-3">
         {/* Left Column - Wellness Overview */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="xl:col-span-2 space-y-6">
           <FadeInUp delay={0.2}>
             <WellnessOverview />
           </FadeInUp>
