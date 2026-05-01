@@ -3,74 +3,73 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Salvere Premium Wellness Palette */
+/* ============================================
+   SALVERE DESIGN SYSTEM — Brand Tokens
+   ============================================ */
 :root {
-  /* Stone - Primary Background */
-  --background: #F5F5F4;
-  --foreground: #1C1917;
-  
-  /* Card surfaces */
-  --card: #FFFFFF;
-  --card-foreground: #1C1917;
-  
-  /* Popover */
-  --popover: #FFFFFF;
-  --popover-foreground: #1C1917;
-  
-  /* Deep Charcoal - Primary accent */
-  --primary: #1C1917;
-  --primary-foreground: #F5F5F4;
-  
-  /* Stone variations */
-  --secondary: #E7E5E4;
-  --secondary-foreground: #1C1917;
-  
-  /* Muted Sage */
-  --muted: #57534E;
-  --muted-foreground: #78716C;
-  
-  /* Accent - warm stone */
-  --accent: #E7E5E4;
-  --accent-foreground: #1C1917;
-  
-  --destructive: #DC2626;
-  --destructive-foreground: #FEFEFE;
-  
-  --border: #D6D3D1;
-  --input: #D6D3D1;
-  --ring: #57534E;
-  
-  /* Charts - earthy tones */
-  --chart-1: #57534E;
-  --chart-2: #78716C;
-  --chart-3: #A8A29E;
-  --chart-4: #D6D3D1;
-  --chart-5: #1C1917;
-  
-  --radius: 0.5rem;
-  
-  /* Sidebar */
-  --sidebar: #FFFFFF;
-  --sidebar-foreground: #1C1917;
-  --sidebar-primary: #1C1917;
-  --sidebar-primary-foreground: #F5F5F4;
-  --sidebar-accent: #E7E5E4;
-  --sidebar-accent-foreground: #1C1917;
-  --sidebar-border: #D6D3D1;
-  --sidebar-ring: #57534E;
-  
-  /* Custom Salvere tokens */
-  --sage: #57534E;
-  --stone: #F5F5F4;
-  --charcoal: #1C1917;
-  --warm-white: #FAFAF9;
-  
-  /* Wholly-inspired Vitality Tokens */
-  --vital-green: #16A34A;
-  --vital-mint: #F0FDF4;
-  --vital-green-hover: #15803D;
+  /* --- Brand Colors (Client Spec) --- */
+  --orange:        #F47C2A; /* Primary action, buttons, highlights */
+  --orange-hover:  #D96A1C; /* Darker orange for button hover */
+  --charcoal:      #2E2E2E; /* Primary text */
+  --warm-beige:    #EFEAE4; /* Section background (primary) */
+  --muted-sage:    #7A8F7B; /* Accent section backgrounds */
+  --muted-sage-dark: #5E7260; /* Sage hover */
+  --soft-white:    #F9F9F7; /* Secondary/card background */
 
-  --radius: 1.25rem; /* Larger, friendlier corners */
+  /* --- Shadcn/ui Token Mappings --- */
+  --background:            #EFEAE4;  /* warm-beige */
+  --foreground:            #2E2E2E;  /* charcoal */
+
+  --card:                  #F9F9F7;  /* soft-white */
+  --card-foreground:       #2E2E2E;
+
+  --popover:               #F9F9F7;
+  --popover-foreground:    #2E2E2E;
+
+  --primary:               #F47C2A;  /* orange — primary action */
+  --primary-foreground:    #FFFFFF;
+
+  --secondary:             #7A8F7B;  /* muted-sage */
+  --secondary-foreground:  #FFFFFF;
+
+  --muted:                 #EFEAE4;
+  --muted-foreground:      #5E7260;
+
+  --accent:                #7A8F7B;
+  --accent-foreground:     #FFFFFF;
+
+  --destructive:           #DC2626;
+  --destructive-foreground:#FEFEFE;
+
+  --border:                #D6CFC7;
+  --input:                 #D6CFC7;
+  --ring:                  #F47C2A;
+
+  /* --- Charts (earthy tones) --- */
+  --chart-1: #F47C2A;
+  --chart-2: #7A8F7B;
+  --chart-3: #2E2E2E;
+  --chart-4: #EFEAE4;
+  --chart-5: #5E7260;
+
+  /* --- Border Radius --- */
+  --radius: 0.75rem;
+
+  /* --- Sidebar --- */
+  --sidebar:                  #F9F9F7;
+  --sidebar-foreground:       #2E2E2E;
+  --sidebar-primary:          #F47C2A;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent:           #EFEAE4;
+  --sidebar-accent-foreground:#2E2E2E;
+  --sidebar-border:           #D6CFC7;
+  --sidebar-ring:             #F47C2A;
+
+  /* --- Legacy Vitality Aliases (mapped to new brand palette) --- */
+  /* Components using --vital-green will render in Muted Sage */
+  --vital-green:        #7A8F7B;  /* was pure green → now muted sage */
+  --vital-green-hover:  #5E7260;  /* darker sage for hover */
+  --vital-mint:         #EBF0EB;  /* was mint green → now sage-tinted off-white */
 }
 
 .dark {
@@ -109,9 +108,9 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
-  --font-serif: var(--font-playfair), 'Playfair Display', Georgia, serif;
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-sans:  var(--font-outfit),   'Outfit',          system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), 'Fraunces',        Georgia, serif;
+  --font-mono:  'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -156,5 +155,35 @@
   }
   body {
     @apply bg-background text-foreground;
+    line-height: 1.6;
+    font-family: var(--font-sans);
+  }
+
+  /* ── Heading Scale ── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    letter-spacing: -0.025em; /* tracking-tight */
+    line-height: 1.15;
+    color: var(--charcoal);
+  }
+
+  h1 { font-size: clamp(2.5rem, 5vw, 4rem);   }
+  h2 { font-size: clamp(1.875rem, 4vw, 3rem);  }
+  h3 { font-size: clamp(1.5rem, 3vw, 2rem);    }
+
+  p {
+    line-height: 1.7;
+    color: var(--charcoal);
+  }
+
+  /* ── Section Label Utility ── */
+  .label-caps {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;    /* tracking-widest */
+    text-transform: uppercase;
+    color: var(--muted-sage);
   }
 }

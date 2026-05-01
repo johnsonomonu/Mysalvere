@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import {
   assessmentQuestions,
   calculateAssessmentResult,
@@ -9,14 +9,35 @@ import {
 import { QuestionStep } from "./question-step"
 import { ResultsStep } from "./results-step"
 import { SuccessStep } from "./success-step"
+import { AuthStep } from "./auth-step"
 import { FadeInUp } from "@/components/motion"
+import { createClient } from "@/lib/supabase/client"
+import { saveAssessmentResult } from "@/lib/actions/assessment-actions"
+import { Loader2 } from "lucide-react"
 
-type Step = "questions" | "results" | "success"
+type Step = "questions" | "auth" | "results" | "success"
 
 export function AssessmentWizard() {
   const [currentStep, setCurrentStep] = useState<Step>("questions")
   const [answers, setAnswers] = useState<Record<string, number>>({})
   const [result, setResult] = useState<AssessmentResult | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null)
+  const [isSaving, setIsSaving] = useState(false)
+
+  // Check auth status on mount
+  useEffect(() => {
+    const supabase = createClient()
+    if (!supabase) {
+      setIsAuthenticated(false)
+      return
+    }
+
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      setIsAuthenticated(!!session)
+    }
+    checkAuth()
+  }, [])
 
   const handleAnswer = useCallback((questionId: string, value: number) => {
     setAnswers(prev => ({ ...prev, [questionId]: value }))
@@ -25,15 +46,43 @@ export function AssessmentWizard() {
   const handleQuestionsComplete = useCallback(() => {
     const assessmentResult = calculateAssessmentResult({ answers })
     setResult(assessmentResult)
+    
+    // If authenticated, go straight to results (and save)
+    // If not, go to auth
+    if (isAuthenticated) {
+      setCurrentStep("results")
+      saveResult(assessmentResult, answers)
+    } else {
+      setCurrentStep("auth")
+    }
+  }, [answers, isAuthenticated])
+
+  const saveResult = async (res: AssessmentResult, ans: Record<string, number>) => {
+    setIsSaving(true)
+    try {
+      await saveAssessmentResult(res, ans)
+    } catch (err) {
+      console.error("Failed to save result:", err)
+      // We still show the results even if save fails, but maybe log it
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const handleAuthSuccess = useCallback(() => {
+    setIsAuthenticated(true)
     setCurrentStep("results")
-  }, [answers])
+    if (result) {
+      saveResult(result, answers)
+    }
+  }, [result, answers])
 
   const handleBackToQuestions = useCallback(() => {
     setCurrentStep("questions")
   }, [])
 
-  // Determine step number for progress (1=questions, 2=results)
-  const stepIndex = currentStep === "questions" ? 0 : currentStep === "results" ? 1 : 2
+  // Determine step number for progress (1=questions, 2=auth/results)
+  const stepIndex = currentStep === "questions" ? 0 : 1
 
   const progressSteps = [
     { id: "questions", title: "Assessment", description: "Answer 14 health questions" },
@@ -89,12 +138,24 @@ export function AssessmentWizard() {
 
       {/* Step content */}
       <div className="relative rounded-3xl border border-[#E7E5E4] bg-white p-8 sm:p-12 shadow-sm min-h-[500px] flex flex-col justify-center">
+        {isSaving && (
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/50 backdrop-blur-[2px] rounded-3xl">
+            <div className="flex flex-col items-center gap-3">
+              <Loader2 className="h-10 w-10 animate-spin text-[var(--orange)]" />
+              <p className="text-sm font-medium text-[#1C1917]">Saving your results...</p>
+            </div>
+          </div>
+        )}
+        
         {currentStep === "questions" && (
           <QuestionStep
             answers={answers}
             onAnswer={handleAnswer}
             onComplete={handleQuestionsComplete}
           />
+        )}
+        {currentStep === "auth" && (
+          <AuthStep onSuccess={handleAuthSuccess} />
         )}
         {currentStep === "results" && result && (
           <ResultsStep result={result} onBack={handleBackToQuestions} />

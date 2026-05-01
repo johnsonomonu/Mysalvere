@@ -14,6 +14,24 @@ CREATE TABLE IF NOT EXISTS public.profiles (
 -- Enable Row Level Security
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
+-- Helper to check admin role without triggering RLS recursion.
+CREATE OR REPLACE FUNCTION public.is_admin(check_user_id UUID DEFAULT auth.uid())
+RETURNS BOOLEAN
+LANGUAGE sql
+SECURITY DEFINER
+STABLE
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM public.profiles p
+    WHERE p.id = check_user_id
+      AND p.role = 'ADMIN'
+  );
+$$;
+
+GRANT EXECUTE ON FUNCTION public.is_admin(UUID) TO authenticated;
+
 -- RLS Policies
 CREATE POLICY "Users can view their own profile" 
   ON public.profiles FOR SELECT 
@@ -30,12 +48,7 @@ CREATE POLICY "Users can insert their own profile"
 -- Admin can view all profiles
 CREATE POLICY "Admins can view all profiles" 
   ON public.profiles FOR SELECT 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND role = 'ADMIN'
-    )
-  );
+  USING (public.is_admin(auth.uid()));
 
 -- Trigger to auto-create profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -86,15 +99,24 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 DECLARE
+  requester_id UUID;
   requester_role TEXT;
 BEGIN
   IF NEW.role = OLD.role THEN
     RETURN NEW;
   END IF;
 
+  requester_id := auth.uid();
+
+  -- Allow trusted server-side contexts (SQL editor/migrations/service role)
+  -- where no end-user JWT subject is present.
+  IF requester_id IS NULL THEN
+    RETURN NEW;
+  END IF;
+
   SELECT role INTO requester_role
   FROM public.profiles
-  WHERE id = auth.uid();
+  WHERE id = requester_id;
 
   IF requester_role IS DISTINCT FROM 'ADMIN' THEN
     RAISE EXCEPTION 'Only admins can change profile roles';

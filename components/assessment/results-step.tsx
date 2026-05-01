@@ -13,17 +13,19 @@ interface ResultsStepProps {
 }
 
 const levelColors = {
-  good: "text-emerald-600",
-  moderate: "text-amber-500",
-  concerning: "text-orange-500",
-  critical: "text-red-500",
+  Balanced: "text-emerald-600",
+  Mild: "text-cyan-600",
+  Moderate: "text-amber-500",
+  High: "text-orange-500",
+  Significant: "text-red-500",
 }
 
 const levelBgColors = {
-  good: "bg-emerald-500",
-  moderate: "bg-amber-500",
-  concerning: "bg-orange-500",
-  critical: "bg-red-500",
+  Balanced: "bg-emerald-500",
+  Mild: "bg-cyan-500",
+  Moderate: "bg-amber-500",
+  High: "bg-orange-500",
+  Significant: "bg-red-500",
 }
 
 export function ResultsStep({ result, onBack }: ResultsStepProps) {
@@ -64,6 +66,10 @@ export function ResultsStep({ result, onBack }: ResultsStepProps) {
           <p className="mt-2 text-[#57534E]">
             This is a snapshot — not the full picture. But it shows where your body needs support the most.
           </p>
+          <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-[10px] font-bold uppercase tracking-widest text-blue-600">
+            <CheckCircle2 className="h-3 w-3" />
+            Saved to your profile
+          </div>
         </div>
       </FadeInUp>
 

@@ -12,9 +12,35 @@ interface DashboardContentProps {
     name: string
     email: string
   }
+  recentAssessments: Array<{
+    id: string
+    date: string
+    score: number
+    status: string
+    priorityArea: string
+  }>
+  upcomingAppointments: Array<{
+    id: string
+    type: string
+    date: string
+    time: string
+    duration: number
+    isVirtual: boolean
+    status: string
+    coach: string
+  }>
+  scoreHistory: Array<{
+    score: number
+    dateLabel: string
+  }>
 }
 
-export function DashboardContent({ user }: DashboardContentProps) {
+export function DashboardContent({
+  user,
+  recentAssessments,
+  upcomingAppointments,
+  scoreHistory,
+}: DashboardContentProps) {
 
   return (
     <div className="py-4 lg:py-6">
@@ -40,20 +66,20 @@ export function DashboardContent({ user }: DashboardContentProps) {
         {/* Left Column - Wellness Overview */}
         <div className="xl:col-span-2 space-y-6">
           <FadeInUp delay={0.2}>
-            <WellnessOverview />
+            <WellnessOverview scoreHistory={scoreHistory} />
           </FadeInUp>
           <FadeInUp delay={0.3}>
-            <ProgressCharts />
+            <ProgressCharts scoreHistory={scoreHistory} />
           </FadeInUp>
         </div>
 
         {/* Right Column - Sidebar */}
         <div className="space-y-6">
           <FadeInUp delay={0.25}>
-            <UpcomingAppointments />
+            <UpcomingAppointments appointments={upcomingAppointments} />
           </FadeInUp>
           <FadeInUp delay={0.35}>
-            <RecentAssessments />
+            <RecentAssessments assessments={recentAssessments} />
           </FadeInUp>
         </div>
       </div>

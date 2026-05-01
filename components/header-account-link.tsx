@@ -9,7 +9,11 @@ interface HeaderUser {
   id: string
 }
 
-export function HeaderAccountLink() {
+interface HeaderAccountLinkProps {
+  isScrolled?: boolean
+}
+
+export function HeaderAccountLink({ isScrolled }: HeaderAccountLinkProps) {
   const [user, setUser] = useState<HeaderUser | null>(null)
 
   useEffect(() => {
@@ -51,7 +55,16 @@ export function HeaderAccountLink() {
   }, [])
 
   return (
-    <Button asChild variant="outline" size="sm" className="rounded-full px-5">
+    <Button 
+      asChild 
+      variant="outline" 
+      size="sm" 
+      className={`rounded-full px-5 transition-colors ${
+        isScrolled 
+          ? "border-white/20 text-[var(--soft-white)] hover:bg-white hover:text-[var(--charcoal)]" 
+          : "border-[var(--charcoal)]/20 text-[var(--charcoal)] hover:bg-[var(--charcoal)] hover:text-white"
+      }`}
+    >
       <Link href={user ? "/dashboard" : "/auth/login"}>
         {user ? "Account" : "Sign in"}
       </Link>

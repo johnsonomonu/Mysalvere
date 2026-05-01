@@ -51,19 +51,9 @@ CREATE POLICY "Users can update their own assessments"
 -- Admin can view all assessments
 CREATE POLICY "Admins can view all assessments" 
   ON public.assessments FOR SELECT 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND role = 'ADMIN'
-    )
-  );
+  USING (public.is_admin(auth.uid()));
 
 -- Admin can update any assessment (for reviewing)
 CREATE POLICY "Admins can update all assessments" 
   ON public.assessments FOR UPDATE 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND role = 'ADMIN'
-    )
-  );
+  USING (public.is_admin(auth.uid()));

@@ -1,105 +1,85 @@
 "use client"
 
-import { useState } from "react"
-import { Search, ChevronDown, Eye } from "lucide-react"
+import { useMemo, useState } from "react"
+import { Search } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { createClient } from "@/lib/supabase/client"
+import { toast } from "sonner"
 
-const mockAssessments = [
-  {
-    id: "ASM-001",
-    user: "Sarah Johnson",
-    email: "sarah.j@example.com",
-    date: "Mar 28, 2026",
-    score: 78,
-    priorityAreas: ["Energy", "Sleep"],
-    status: "completed",
-  },
-  {
-    id: "ASM-002",
-    user: "Michael Chen",
-    email: "m.chen@example.com",
-    date: "Mar 27, 2026",
-    score: 65,
-    priorityAreas: ["Blood Sugar", "Weight"],
-    status: "completed",
-  },
-  {
-    id: "ASM-003",
-    user: "Emily Davis",
-    email: "emily.d@example.com",
-    date: "Mar 27, 2026",
-    score: 82,
-    priorityAreas: ["Hormones"],
-    status: "completed",
-  },
-  {
-    id: "ASM-004",
-    user: "James Wilson",
-    email: "j.wilson@example.com",
-    date: "Mar 26, 2026",
-    score: 58,
-    priorityAreas: ["Brain Fog", "Energy", "Sleep"],
-    status: "reviewed",
-  },
-  {
-    id: "ASM-005",
-    user: "Lisa Anderson",
-    email: "l.anderson@example.com",
-    date: "Mar 26, 2026",
-    score: 71,
-    priorityAreas: ["Weight", "Hormones"],
-    status: "completed",
-  },
-  {
-    id: "ASM-006",
-    user: "Robert Taylor",
-    email: "r.taylor@example.com",
-    date: "Mar 25, 2026",
-    score: 45,
-    priorityAreas: ["Blood Sugar", "Energy", "Sleep"],
-    status: "flagged",
-  },
-  {
-    id: "ASM-007",
-    user: "Jennifer Brown",
-    email: "j.brown@example.com",
-    date: "Mar 25, 2026",
-    score: 89,
-    priorityAreas: ["Sleep"],
-    status: "completed",
-  },
-  {
-    id: "ASM-008",
-    user: "David Martinez",
-    email: "d.martinez@example.com",
-    date: "Mar 24, 2026",
-    score: 62,
-    priorityAreas: ["Weight", "Brain Fog"],
-    status: "completed",
-  },
-]
-
-const statusStyles = {
-  completed: "bg-green-100 text-green-700",
-  reviewed: "bg-blue-100 text-blue-700",
-  flagged: "bg-red-100 text-red-700",
+export interface AdminAssessmentRow {
+  id: string
+  user: string
+  email: string
+  date: string
+  score: number
+  priorityAreas: string[]
+  status: "draft" | "completed" | "reviewed"
 }
 
-export function AssessmentsTable() {
+interface AssessmentsTableProps {
+  assessments: AdminAssessmentRow[]
+}
+
+const statusStyles = {
+  draft: "bg-[#E7E5E4] text-[#57534E]",
+  completed: "bg-green-100 text-green-700",
+  reviewed: "bg-blue-100 text-blue-700",
+}
+
+export function AssessmentsTable({ assessments }: AssessmentsTableProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [sortBy, setSortBy] = useState<"date" | "score">("date")
+  const [rows, setRows] = useState(assessments)
+  const [savingId, setSavingId] = useState<string | null>(null)
 
-  const filteredAssessments = mockAssessments.filter(
-    (a) =>
-      a.user.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      a.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      a.id.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const filteredAssessments = useMemo(() => {
+    const filtered = rows.filter(
+      (a) =>
+        a.user.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        a.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        a.id.toLowerCase().includes(searchQuery.toLowerCase())
+    )
 
-  const sortedAssessments = [...filteredAssessments].sort((a, b) => {
-    if (sortBy === "score") return b.score - a.score
-    return new Date(b.date).getTime() - new Date(a.date).getTime()
-  })
+    return [...filtered].sort((a, b) => {
+      if (sortBy === "score") return b.score - a.score
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
+    })
+  }, [rows, searchQuery, sortBy])
+
+  const updateAssessmentStatus = async (
+    assessmentId: string,
+    status: "draft" | "completed" | "reviewed"
+  ) => {
+    const supabase = createClient()
+
+    if (!supabase) {
+      toast.error("Admin actions are unavailable in this environment.")
+      return
+    }
+
+    setSavingId(assessmentId)
+
+    try {
+      const { error } = await supabase
+        .from("assessments")
+        .update({ status })
+        .eq("id", assessmentId)
+
+      if (error) {
+        throw error
+      }
+
+      setRows((previous) =>
+        previous.map((row) => (row.id === assessmentId ? { ...row, status } : row))
+      )
+
+      toast.success("Assessment status updated")
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not update assessment status")
+    } finally {
+      setSavingId(null)
+    }
+  }
 
   return (
     <div className="rounded-xl border border-[#E7E5E4] bg-white shadow-sm overflow-hidden">
@@ -118,11 +98,11 @@ export function AssessmentsTable() {
         <div className="flex items-center gap-2">
           <span className="text-sm text-[#57534E]">Sort by:</span>
           <button
+            type="button"
             onClick={() => setSortBy(sortBy === "date" ? "score" : "date")}
             className="flex items-center gap-1 rounded-lg border border-[#E7E5E4] bg-[#FAFAF9] px-3 py-2 text-sm font-medium text-[#1C1917] hover:bg-[#E7E5E4]"
           >
-            {sortBy === "date" ? "Date" : "Score"}
-            <ChevronDown className="h-4 w-4" />
+            Sort: {sortBy === "date" ? "Date" : "Score"}
           </button>
         </div>
       </div>
@@ -156,10 +136,10 @@ export function AssessmentsTable() {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#E7E5E4]">
-            {sortedAssessments.map((assessment) => (
+            {filteredAssessments.map((assessment) => (
               <tr key={assessment.id} className="hover:bg-[#FAFAF9]">
                 <td className="px-4 py-4 text-sm font-mono text-[#57534E]">
-                  {assessment.id}
+                  {assessment.id.slice(0, 8)}
                 </td>
                 <td className="px-4 py-4">
                   <div>
@@ -188,31 +168,46 @@ export function AssessmentsTable() {
                 </td>
                 <td className="px-4 py-4">
                   <div className="flex flex-wrap gap-1">
-                    {assessment.priorityAreas.map((area) => (
-                      <span
-                        key={area}
-                        className="inline-flex items-center rounded-md bg-[#E7E5E4] px-2 py-0.5 text-xs text-[#1C1917]"
-                      >
-                        {area}
-                      </span>
-                    ))}
+                    {assessment.priorityAreas.length === 0 ? (
+                      <span className="text-xs text-[#A8A29E]">None</span>
+                    ) : (
+                      assessment.priorityAreas.map((area) => (
+                        <span
+                          key={`${assessment.id}-${area}`}
+                          className="inline-flex items-center rounded-md bg-[#E7E5E4] px-2 py-0.5 text-xs text-[#1C1917]"
+                        >
+                          {area}
+                        </span>
+                      ))
+                    )}
                   </div>
                 </td>
                 <td className="px-4 py-4">
-                  <span
-                    className={cn(
-                      "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
-                      statusStyles[assessment.status as keyof typeof statusStyles]
-                    )}
-                  >
-                    {assessment.status}
-                  </span>
-                </td>
-                <td className="px-4 py-4 text-right">
-                  <button className="inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-sm font-medium text-[#57534E] hover:bg-[#E7E5E4] hover:text-[#1C1917]">
-                    <Eye className="h-4 w-4" />
-                    View
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={cn(
+                        "inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
+                        statusStyles[assessment.status]
+                      )}
+                    >
+                      {assessment.status}
+                    </span>
+                    <select
+                      value={assessment.status}
+                      disabled={savingId === assessment.id}
+                      onChange={(event) =>
+                        updateAssessmentStatus(
+                          assessment.id,
+                          event.target.value as "draft" | "completed" | "reviewed"
+                        )
+                      }
+                      className="rounded-md border border-[#E7E5E4] bg-white px-2 py-1 text-xs text-[#57534E]"
+                    >
+                      <option value="draft">draft</option>
+                      <option value="completed">completed</option>
+                      <option value="reviewed">reviewed</option>
+                    </select>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -221,19 +216,11 @@ export function AssessmentsTable() {
       </div>
 
       {/* Pagination */}
-      <div className="border-t border-[#E7E5E4] px-4 py-3 flex items-center justify-between">
+      <div className="border-t border-[#E7E5E4] px-4 py-3">
         <p className="text-sm text-[#57534E]">
-          Showing <span className="font-medium">{sortedAssessments.length}</span> of{" "}
-          <span className="font-medium">{mockAssessments.length}</span> results
+          Showing <span className="font-medium">{filteredAssessments.length}</span> of{" "}
+          <span className="font-medium">{rows.length}</span> assessments
         </p>
-        <div className="flex gap-2">
-          <button className="rounded-lg border border-[#E7E5E4] px-3 py-1.5 text-sm font-medium text-[#57534E] hover:bg-[#FAFAF9] disabled:opacity-50" disabled>
-            Previous
-          </button>
-          <button className="rounded-lg border border-[#E7E5E4] px-3 py-1.5 text-sm font-medium text-[#57534E] hover:bg-[#FAFAF9] disabled:opacity-50" disabled>
-            Next
-          </button>
-        </div>
       </div>
     </div>
   )

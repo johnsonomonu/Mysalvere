@@ -9,7 +9,7 @@ export function FinalCtaSection() {
   return (
     <section className="py-24 lg:py-32 bg-[#F9FAFB]" id="final-cta">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl rounded-[3rem] bg-[var(--vital-green)] py-24 px-6 lg:px-12 text-center shadow-2xl shadow-green-600/20 relative overflow-hidden isolation-auto">
+        <div className="mx-auto max-w-5xl rounded-[3rem] bg-[var(--charcoal)] py-24 px-6 lg:px-12 text-center shadow-2xl shadow-black/20 relative overflow-hidden isolation-auto">
           {/* Decorative Background */}
           <div className="absolute top-0 right-0 z-10 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
           <div className="absolute bottom-0 left-0 z-10 w-64 h-64 bg-black/5 rounded-full blur-3xl -ml-32 -mb-32" />
@@ -30,7 +30,7 @@ export function FinalCtaSection() {
               <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-6">
                 <BookSessionButton 
                   size="xl" 
-                  className="w-full sm:w-auto bg-white text-[var(--vital-green)] hover:bg-[#F0FDF4] rounded-2xl h-16 px-10 shadow-xl"
+                  className="w-full sm:w-auto rounded-2xl h-16 px-10 shadow-xl"
                 >
                   Book a Session
                 </BookSessionButton>

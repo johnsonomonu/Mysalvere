@@ -1,74 +1,72 @@
 "use client"
 
-import { useState } from "react"
-import { Search, MoreHorizontal, Shield, User } from "lucide-react"
+import { useMemo, useState } from "react"
+import { Search, Shield, User } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { createClient } from "@/lib/supabase/client"
+import { toast } from "sonner"
 
-const mockUsers = [
-  {
-    id: "USR-001",
-    name: "Sarah Johnson",
-    email: "sarah.j@example.com",
-    role: "USER",
-    assessments: 5,
-    lastActive: "2 hours ago",
-    status: "active",
-  },
-  {
-    id: "USR-002",
-    name: "Michael Chen",
-    email: "m.chen@example.com",
-    role: "USER",
-    assessments: 3,
-    lastActive: "1 day ago",
-    status: "active",
-  },
-  {
-    id: "USR-003",
-    name: "Dr. Emily Davis",
-    email: "emily.d@salvere.com",
-    role: "ADMIN",
-    assessments: 0,
-    lastActive: "Just now",
-    status: "active",
-  },
-  {
-    id: "USR-004",
-    name: "James Wilson",
-    email: "j.wilson@example.com",
-    role: "USER",
-    assessments: 8,
-    lastActive: "3 days ago",
-    status: "inactive",
-  },
-  {
-    id: "USR-005",
-    name: "Lisa Anderson",
-    email: "l.anderson@example.com",
-    role: "USER",
-    assessments: 2,
-    lastActive: "1 week ago",
-    status: "active",
-  },
-  {
-    id: "USR-006",
-    name: "Robert Taylor",
-    email: "r.taylor@example.com",
-    role: "USER",
-    assessments: 12,
-    lastActive: "4 hours ago",
-    status: "active",
-  },
-]
+export interface AdminUserRow {
+  id: string
+  name: string
+  email: string
+  role: "USER" | "ADMIN"
+  assessments: number
+  lastActive: string
+  status: "active" | "inactive"
+}
 
-export function UsersTable() {
+interface UsersTableProps {
+  currentAdminId: string
+  users: AdminUserRow[]
+}
+
+export function UsersTable({ currentAdminId, users }: UsersTableProps) {
   const [searchQuery, setSearchQuery] = useState("")
+  const [rows, setRows] = useState(users)
+  const [savingId, setSavingId] = useState<string | null>(null)
 
-  const filteredUsers = mockUsers.filter(
-    (u) =>
-      u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      u.email.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredUsers = useMemo(
+    () =>
+      rows.filter(
+        (u) =>
+          u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          u.email.toLowerCase().includes(searchQuery.toLowerCase())
+      ),
+    [rows, searchQuery]
   )
+
+  const updateRole = async (targetUserId: string, role: "USER" | "ADMIN") => {
+    const supabase = createClient()
+
+    if (!supabase) {
+      toast.error("Admin actions are unavailable in this environment.")
+      return
+    }
+
+    setSavingId(targetUserId)
+
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ role })
+        .eq("id", targetUserId)
+
+      if (error) {
+        throw error
+      }
+
+      setRows((previous) =>
+        previous.map((row) => (row.id === targetUserId ? { ...row, role } : row))
+      )
+
+      toast.success(`Role updated to ${role}`)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not update role")
+    } finally {
+      setSavingId(null)
+    }
+  }
 
   return (
     <div className="rounded-xl border border-[#E7E5E4] bg-white shadow-sm overflow-hidden">
@@ -95,6 +93,9 @@ export function UsersTable() {
                 User
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#57534E]">
+                ID
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#57534E]">
                 Role
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-[#57534E]">
@@ -107,7 +108,7 @@ export function UsersTable() {
                 Status
               </th>
               <th className="px-4 py-3 text-right text-xs font-medium uppercase tracking-wider text-[#57534E]">
-                Actions
+                Manage
               </th>
             </tr>
           </thead>
@@ -130,6 +131,9 @@ export function UsersTable() {
                       <p className="text-xs text-[#57534E]">{user.email}</p>
                     </div>
                   </div>
+                </td>
+                <td className="px-4 py-4 text-xs font-mono text-[#57534E]">
+                  {user.id.slice(0, 8)}
                 </td>
                 <td className="px-4 py-4">
                   <span
@@ -168,9 +172,16 @@ export function UsersTable() {
                   </span>
                 </td>
                 <td className="px-4 py-4 text-right">
-                  <button className="inline-flex items-center justify-center rounded-lg p-2 text-[#57534E] hover:bg-[#E7E5E4] hover:text-[#1C1917]">
-                    <MoreHorizontal className="h-4 w-4" />
-                  </button>
+                  <select
+                    value={user.role}
+                    disabled={savingId === user.id || user.id === currentAdminId}
+                    onChange={(event) => updateRole(user.id, event.target.value as "USER" | "ADMIN")}
+                    className="rounded-md border border-[#E7E5E4] bg-white px-2 py-1 text-xs text-[#57534E]"
+                    title={user.id === currentAdminId ? "You cannot change your own role here" : "Change role"}
+                  >
+                    <option value="USER">USER</option>
+                    <option value="ADMIN">ADMIN</option>
+                  </select>
                 </td>
               </tr>
             ))}
@@ -179,19 +190,11 @@ export function UsersTable() {
       </div>
 
       {/* Pagination */}
-      <div className="border-t border-[#E7E5E4] px-4 py-3 flex items-center justify-between">
+      <div className="border-t border-[#E7E5E4] px-4 py-3">
         <p className="text-sm text-[#57534E]">
           Showing <span className="font-medium">{filteredUsers.length}</span> of{" "}
-          <span className="font-medium">{mockUsers.length}</span> users
+          <span className="font-medium">{rows.length}</span> users
         </p>
-        <div className="flex gap-2">
-          <button className="rounded-lg border border-[#E7E5E4] px-3 py-1.5 text-sm font-medium text-[#57534E] hover:bg-[#FAFAF9] disabled:opacity-50" disabled>
-            Previous
-          </button>
-          <button className="rounded-lg border border-[#E7E5E4] px-3 py-1.5 text-sm font-medium text-[#57534E] hover:bg-[#FAFAF9] disabled:opacity-50" disabled>
-            Next
-          </button>
-        </div>
       </div>
     </div>
   )

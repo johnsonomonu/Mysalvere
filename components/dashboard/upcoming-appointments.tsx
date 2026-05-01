@@ -3,28 +3,20 @@
 import { BookSessionButton } from "@/components/book-session-button"
 import { Calendar, Clock, Video } from "lucide-react"
 
-const appointments = [
-  {
-    id: "1",
-    type: "Coaching Session",
-    coach: "Dr. Emily Chen",
-    date: "Apr 2, 2026",
-    time: "10:00 AM",
-    duration: 45,
-    isVirtual: true,
-  },
-  {
-    id: "2",
-    type: "Follow-up Call",
-    coach: "Dr. Emily Chen",
-    date: "Apr 15, 2026",
-    time: "2:30 PM",
-    duration: 30,
-    isVirtual: true,
-  },
-]
+interface UpcomingAppointmentsProps {
+  appointments: Array<{
+    id: string
+    type: string
+    coach: string
+    date: string
+    time: string
+    duration: number
+    isVirtual: boolean
+    status: string
+  }>
+}
 
-export function UpcomingAppointments() {
+export function UpcomingAppointments({ appointments }: UpcomingAppointmentsProps) {
   return (
     <div className="rounded-2xl border border-[#E7E5E4] bg-white p-6 shadow-sm">
       <h2 className="font-serif text-lg font-medium text-[#1C1917] mb-4">
@@ -66,13 +58,7 @@ export function UpcomingAppointments() {
               </div>
 
               <div className="mt-3 pt-3 border-t border-[#E7E5E4]">
-                <button className="text-sm font-medium text-[#1C1917] hover:text-[#57534E] transition-colors">
-                  Join Meeting
-                </button>
-                <span className="mx-2 text-[#D6D3D1]">|</span>
-                <button className="text-sm text-[#57534E] hover:text-[#1C1917] transition-colors">
-                  Reschedule
-                </button>
+                <p className="text-xs uppercase tracking-[0.14em] text-[#A8A29E]">{appointment.status}</p>
               </div>
             </div>
           ))}
@@ -88,11 +74,11 @@ export function UpcomingAppointments() {
 
       <div className="mt-4 pt-4 border-t border-[#E7E5E4]">
         <BookSessionButton 
-          sessionType="coaching" 
           variant="outline" 
           className="w-full"
+          href="/services"
         >
-          Book New Session
+          Schedule Session
         </BookSessionButton>
       </div>
     </div>

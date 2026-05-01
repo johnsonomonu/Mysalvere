@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server"
 import { sendBookingConfirmationEmail } from "@/lib/email/send-booking-confirmation"
+import { sendOperationalAlertEmail } from "@/lib/email/send-operational-alert"
+import { checkRateLimit } from "@/lib/security/rate-limit"
 import { createAdminClient } from "@/lib/supabase/admin"
 
 interface FlutterwaveWebhookPayload {
@@ -18,7 +20,7 @@ interface FlutterwaveWebhookPayload {
   }
 }
 
-function isSuccessfulPayment(payload: FlutterwaveWebhookPayload): boolean {
+export function isSuccessfulPayment(payload: FlutterwaveWebhookPayload): boolean {
   const event = payload.event || ""
   const status = payload.data?.status || ""
 
@@ -26,6 +28,25 @@ function isSuccessfulPayment(payload: FlutterwaveWebhookPayload): boolean {
 }
 
 export async function POST(request: Request) {
+  const sourceIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown"
+  const webhookRateLimit = checkRateLimit({
+    key: `flutterwave-webhook:${sourceIp}`,
+    maxRequests: 120,
+    windowMs: 60_000,
+  })
+
+  if (!webhookRateLimit.allowed) {
+    return NextResponse.json(
+      { error: "Webhook rate limit exceeded" },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(webhookRateLimit.retryAfterSeconds),
+        },
+      }
+    )
+  }
+
   const webhookHash = process.env.FLUTTERWAVE_WEBHOOK_HASH
   const headerHash = request.headers.get("verif-hash")
   const supabaseAdmin = createAdminClient()
@@ -76,6 +97,20 @@ export async function POST(request: Request) {
       )
     }
 
+    try {
+      await sendOperationalAlertEmail({
+        subject: "Flutterwave webhook ignored",
+        message: "A Flutterwave webhook payload was received but did not match the successful-payment criteria.",
+        details: {
+          event: payload.event ?? null,
+          status: payload.data?.status ?? null,
+          txRef: payload.data?.tx_ref ?? null,
+        },
+      })
+    } catch (error) {
+      console.error("Failed to send operational alert for ignored webhook", error)
+    }
+
     return NextResponse.json({ received: true, ignored: true }, { status: 200 })
   }
 
@@ -108,6 +143,19 @@ export async function POST(request: Request) {
 
   if (insertError) {
     console.error("Failed to persist webhook event", insertError)
+    try {
+      await sendOperationalAlertEmail({
+        subject: "Flutterwave webhook persistence failed",
+        message: "The system could not persist an incoming Flutterwave webhook event.",
+        details: {
+          error: insertError.message,
+          eventId,
+          txRef,
+        },
+      })
+    } catch (error) {
+      console.error("Failed to send operational alert for persistence error", error)
+    }
     return NextResponse.json({ error: "Failed to persist webhook event" }, { status: 500 })
   }
 
@@ -123,6 +171,20 @@ export async function POST(request: Request) {
       .from("payment_webhook_events")
       .update({ event_status: "failed" })
       .eq("dedupe_key", dedupeKey)
+
+    try {
+      await sendOperationalAlertEmail({
+        subject: "Flutterwave webhook missing customer email",
+        message: "A successful Flutterwave payment arrived without a customer email address.",
+        details: {
+          eventId,
+          txRef,
+        },
+      })
+    } catch (error) {
+      console.error("Failed to send operational alert for missing customer email", error)
+    }
+
     return NextResponse.json({ error: "Missing customer email" }, { status: 400 })
   }
 
@@ -150,6 +212,21 @@ export async function POST(request: Request) {
       .from("payment_webhook_events")
       .update({ event_status: "failed" })
       .eq("dedupe_key", dedupeKey)
+
+    try {
+      await sendOperationalAlertEmail({
+        subject: "Flutterwave booking confirmation email failed",
+        message: "The system received a successful payment but failed to send the booking confirmation email.",
+        details: {
+          eventId,
+          txRef,
+          customerEmail,
+          error: error instanceof Error ? error.message : String(error),
+        },
+      })
+    } catch (alertError) {
+      console.error("Failed to send operational alert for email failure", alertError)
+    }
 
     return NextResponse.json({ error: "Failed to send email" }, { status: 500 })
   }

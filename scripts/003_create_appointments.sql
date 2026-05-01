@@ -58,19 +58,9 @@ CREATE POLICY "Users can update their own appointments"
 -- Admin can view all appointments
 CREATE POLICY "Admins can view all appointments" 
   ON public.appointments FOR SELECT 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND role = 'ADMIN'
-    )
-  );
+  USING (public.is_admin(auth.uid()));
 
 -- Admin can manage all appointments
 CREATE POLICY "Admins can manage all appointments" 
   ON public.appointments FOR ALL 
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.profiles 
-      WHERE id = auth.uid() AND role = 'ADMIN'
-    )
-  );
+  USING (public.is_admin(auth.uid()));

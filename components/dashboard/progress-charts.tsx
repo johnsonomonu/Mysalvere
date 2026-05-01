@@ -1,29 +1,46 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { cn } from "@/lib/utils"
 
 const timeRanges = ["Week", "Month", "3 Months", "Year"] as const
 type TimeRange = typeof timeRanges[number]
 
-const mockData = {
-  Week: [65, 68, 72, 70, 75, 73, 78],
-  Month: [55, 58, 62, 65, 63, 68, 70, 72, 75, 73, 76, 78, 80, 79, 82, 78, 80, 83, 85, 82, 84, 86, 85, 87, 88, 86, 89, 88],
-  "3 Months": Array.from({ length: 12 }, (_, i) => 50 + i * 3 + Math.random() * 5),
-  Year: Array.from({ length: 12 }, (_, i) => 45 + i * 4 + Math.random() * 8),
+interface ProgressChartsProps {
+  scoreHistory: Array<{
+    score: number
+    dateLabel: string
+  }>
 }
 
-const labels = {
-  Week: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-  Month: Array.from({ length: 28 }, (_, i) => (i + 1).toString()),
-  "3 Months": ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10", "W11", "W12"],
-  Year: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-}
-
-export function ProgressCharts() {
+export function ProgressCharts({ scoreHistory }: ProgressChartsProps) {
   const [timeRange, setTimeRange] = useState<TimeRange>("Week")
-  const data = mockData[timeRange]
-  const chartLabels = labels[timeRange]
+
+  const { data, chartLabels } = useMemo(() => {
+    const byRange = {
+      Week: scoreHistory.slice(-7),
+      Month: scoreHistory.slice(-12),
+      "3 Months": scoreHistory.slice(-18),
+      Year: scoreHistory.slice(-24),
+    }
+
+    const selected = byRange[timeRange]
+    return {
+      data: selected.map((item) => item.score),
+      chartLabels: selected.map((item) => item.dateLabel),
+    }
+  }, [scoreHistory, timeRange])
+
+  if (data.length === 0) {
+    return (
+      <div className="rounded-2xl border border-[#E7E5E4] bg-white p-6 shadow-sm">
+        <h2 className="font-serif text-xl font-medium text-[#1C1917]">Wellness Trend</h2>
+        <p className="mt-2 text-sm text-[#57534E]">
+          No assessment history yet. Complete an assessment to start seeing trend data.
+        </p>
+      </div>
+    )
+  }
 
   const maxValue = Math.max(...data)
   const minValue = Math.min(...data)
@@ -92,7 +109,7 @@ export function ProgressCharts() {
                   </div>
                   {showLabel && (
                     <span className="text-xs text-[#A8A29E] absolute -bottom-0 transform">
-                      {chartLabels[index]}
+                        {chartLabels[index]}
                     </span>
                   )}
                 </div>

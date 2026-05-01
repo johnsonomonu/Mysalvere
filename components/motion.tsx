@@ -1,65 +1,41 @@
 "use client"
 
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { motion, type HTMLMotionProps, type Variants } from "framer-motion"
 import { cn } from "@/lib/utils"
 
-interface FadeInUpProps {
-  children: ReactNode
-  className?: string
+interface FadeInUpProps extends HTMLMotionProps<"div"> {
   delay?: number
   duration?: number
+  distance?: number
 }
 
 export function FadeInUp({ 
   children, 
   className,
   delay = 0,
-  duration = 0.6 
+  duration = 0.5,
+  distance = 20,
+  ...props
 }: FadeInUpProps) {
-  const [isVisible, setIsVisible] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <div
-      ref={ref}
-      className={cn(
-        "transition-all ease-out",
-        isVisible 
-          ? "opacity-100 translate-y-0" 
-          : "opacity-0 translate-y-8",
-        className
-      )}
-      style={{
-        transitionDuration: `${duration}s`,
-        transitionDelay: `${delay}s`,
+    <motion.div
+      initial={{ opacity: 0, y: distance }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ 
+        duration, 
+        delay,
+        ease: [0.21, 0.47, 0.32, 0.98]
       }}
+      className={cn(className)}
+      {...props}
     >
       {children}
-    </div>
+    </motion.div>
   )
 }
 
-interface StaggerChildrenProps {
-  children: ReactNode[]
-  className?: string
+interface StaggerChildrenProps extends HTMLMotionProps<"div"> {
   staggerDelay?: number
   initialDelay?: number
 }
@@ -68,15 +44,41 @@ export function StaggerChildren({
   children,
   className,
   staggerDelay = 0.1,
-  initialDelay = 0
+  initialDelay = 0,
+  ...props
 }: StaggerChildrenProps) {
   return (
-    <div className={className}>
-      {children.map((child, index) => (
-        <FadeInUp key={index} delay={initialDelay + index * staggerDelay}>
-          {child}
-        </FadeInUp>
-      ))}
-    </div>
+    <motion.div
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={{
+        hidden: { opacity: 0 },
+        show: {
+          opacity: 1,
+          transition: {
+            staggerChildren: staggerDelay,
+            delayChildren: initialDelay,
+          },
+        },
+      }}
+      className={cn(className)}
+      {...props}
+    >
+      {children}
+    </motion.div>
   )
+}
+
+export const StaggerItem = motion.div
+export const staggerItemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { 
+    opacity: 1, 
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.21, 0.47, 0.32, 0.98]
+    }
+  }
 }

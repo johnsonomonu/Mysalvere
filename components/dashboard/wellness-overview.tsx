@@ -5,48 +5,68 @@ import {
   TrendingDown, 
   Minus,
   Activity,
-  Moon,
-  Zap,
-  Brain
+  LineChart,
+  BarChart3,
+  Target,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
-const metrics = [
-  {
-    label: "Overall Wellness",
-    value: 72,
-    change: 8,
-    trend: "up" as const,
-    icon: Activity,
-    color: "bg-[#1C1917]",
-  },
-  {
-    label: "Energy Level",
-    value: 65,
-    change: 12,
-    trend: "up" as const,
-    icon: Zap,
-    color: "bg-[#57534E]",
-  },
-  {
-    label: "Sleep Quality",
-    value: 78,
-    change: -3,
-    trend: "down" as const,
-    icon: Moon,
-    color: "bg-[#78716C]",
-  },
-  {
-    label: "Mental Clarity",
-    value: 70,
-    change: 0,
-    trend: "stable" as const,
-    icon: Brain,
-    color: "bg-[#A8A29E]",
-  },
-]
+interface WellnessOverviewProps {
+  scoreHistory: Array<{
+    score: number
+    dateLabel: string
+  }>
+}
 
-export function WellnessOverview() {
+export function WellnessOverview({ scoreHistory }: WellnessOverviewProps) {
+  const latest = scoreHistory.at(-1)?.score ?? 0
+  const previous = scoreHistory.at(-2)?.score ?? latest
+  const monthSlice = scoreHistory.slice(-4)
+  const monthAverage =
+    monthSlice.length > 0
+      ? monthSlice.reduce((sum, item) => sum + item.score, 0) / monthSlice.length
+      : latest
+  const best = scoreHistory.length > 0 ? Math.max(...scoreHistory.map((item) => item.score)) : latest
+
+  const metrics = [
+    {
+      label: "Overall Wellness",
+      value: latest,
+      change: latest - previous,
+      trend: latest > previous ? "up" : latest < previous ? "down" : "stable",
+      icon: Activity,
+      color: "bg-[#1C1917]",
+      suffix: "/ 100",
+    },
+    {
+      label: "Trend Delta",
+      value: latest - previous,
+      change: latest - previous,
+      trend: latest > previous ? "up" : latest < previous ? "down" : "stable",
+      icon: LineChart,
+      color: "bg-[#57534E]",
+      suffix: " pts",
+    },
+    {
+      label: "30-Day Average",
+      value: monthAverage,
+      change: monthAverage - previous,
+      trend: monthAverage > previous ? "up" : monthAverage < previous ? "down" : "stable",
+      icon: BarChart3,
+      color: "bg-[#78716C]",
+      suffix: " avg",
+    },
+    {
+      label: "Best Recorded",
+      value: best,
+      change: best - latest,
+      trend: best > latest ? "up" : "stable",
+      icon: Target,
+      color: "bg-[#A8A29E]",
+      suffix: " peak",
+    },
+  ] as const
+
   return (
     <div className="rounded-2xl border border-[#E7E5E4] bg-white p-6 shadow-sm">
       <h2 className="font-serif text-xl font-medium text-[#1C1917] mb-6">
@@ -63,7 +83,15 @@ export function WellnessOverview() {
 }
 
 interface MetricCardProps {
-  metric: typeof metrics[number]
+  metric: {
+    label: string
+    value: number
+    change: number
+    trend: "up" | "down" | "stable"
+    icon: React.ComponentType<{ className?: string }>
+    color: string
+    suffix: string
+  }
 }
 
 function MetricCard({ metric }: MetricCardProps) {
@@ -89,9 +117,9 @@ function MetricCard({ metric }: MetricCardProps) {
       
       <div className="flex items-baseline gap-1">
         <span className="font-serif text-2xl font-medium text-[#1C1917]">
-          {metric.value}
+          {Math.round(metric.value)}
         </span>
-        <span className="text-sm text-[#57534E]">/ 100</span>
+        <span className="text-sm text-[#57534E]">{metric.suffix}</span>
       </div>
       
       <p className="mt-1 text-sm text-[#57534E]">{metric.label}</p>
@@ -100,9 +128,9 @@ function MetricCard({ metric }: MetricCardProps) {
         <TrendIcon className="h-3 w-3" />
         <span>
           {metric.change > 0 && "+"}
-          {metric.change}%
+          {Math.round(metric.change)}
         </span>
-        <span className="text-[#A8A29E]">vs last month</span>
+        <span className="text-[#A8A29E]">vs previous entry</span>
       </div>
     </div>
   )

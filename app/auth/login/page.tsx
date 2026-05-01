@@ -9,6 +9,7 @@ import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { FadeInUp } from "@/components/motion"
 import { createClient } from "@/lib/supabase/client"
+import { getSafeRedirectPath } from "@/lib/auth/redirect"
 import { Eye, EyeOff, ArrowLeft } from "lucide-react"
 
 const loginSchema = z.object({
@@ -32,16 +33,6 @@ export default function LoginPage() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
   })
-
-  const getSafeRedirectPath = () => {
-    const redirect = searchParams.get("redirect")
-
-    if (!redirect || !redirect.startsWith("/") || redirect.startsWith("//")) {
-      return "/dashboard"
-    }
-
-    return redirect
-  }
 
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true)
@@ -69,7 +60,7 @@ export default function LoginPage() {
         return
       }
 
-      router.push(getSafeRedirectPath())
+      router.push(getSafeRedirectPath(searchParams.get("redirect")))
       router.refresh()
     } catch {
       setError("A network error occurred. Please try again.")

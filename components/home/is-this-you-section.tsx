@@ -1,87 +1,87 @@
 "use client"
 
-import { FadeInUp } from "@/components/motion"
+import { FadeInUp, StaggerChildren, StaggerItem, staggerItemVariants } from "@/components/motion"
 import { 
-  Activity, 
-  Brain, 
-  Moon, 
-  Scale, 
-  Zap, 
-  HeartPulse 
+  HeartPulse,
+  Zap,
+  Scale,
+  Brain,
+  Moon,
+  Activity
 } from "lucide-react"
 
-const symptoms = [
-  {
-    icon: HeartPulse,
-    title: "Chronic health issues",
-    description: "Diabetes, Hypertension, High Blood Pressure, and you depend on medication and supplements on a regular basis."
+const points = [
+  { 
+    icon: HeartPulse, 
+    title: "Chronic health issues", 
+    description: "Like Diabetes, Hypertension, High Blood Pressure, and you depend on medication and supplements on a regular basis." 
   },
-  {
-    icon: Zap,
-    title: "Low Energy",
-    description: "You rely on coffee to get through the day, and you're always feeling tired and stressed."
+  { 
+    icon: Zap, 
+    title: "Low Energy", 
+    description: "You rely on coffee to get through the day, and you’re always feeling tired and stressed." 
   },
-  {
-    icon: Scale,
-    title: "Stubborn weight gain",
-    description: "You're exercising, you're not overeating, but the weight just won't shift."
+  { 
+    icon: Scale, 
+    title: "Stubborn weight gain", 
+    description: "You’re exercising, you’re not overeating, but the weight just won’t shift." 
   },
-  {
-    icon: Brain,
-    title: "Brain fog",
-    description: "Reduced focus and mental clarity, forgetting things easily, your mind just doesn't feel sharp."
+  { 
+    icon: Brain, 
+    title: "Brain fog", 
+    description: "Reduced focus and mental clarity, forgetting things easily, your mind just doesn’t feel sharp." 
   },
-  {
-    icon: Moon,
-    title: "Poor sleep",
-    description: "You struggle to fall asleep, and even when you do, you wake up tired."
+  { 
+    icon: Moon, 
+    title: "Poor sleep", 
+    description: "You struggle to fall asleep, and even when you do, you wake up tired." 
   },
-  {
-    icon: Activity,
-    title: "Hormonal imbalance",
-    description: "Mood swings, irregular or painful cycles, low libido, hot flashes, or changes you can't quite explain."
+  { 
+    icon: Activity, 
+    title: "Hormonal imbalance", 
+    description: "Mood swings, irregular or painful cycles, low libido, hot flashes, or changes you can’t quite explain." 
   },
 ]
 
 export function IsThisYouSection() {
   return (
-    <section className="py-24 lg:py-32 bg-[#F9FAFB]" id="about">
+    <section className="py-16 lg:py-24 bg-[var(--soft-white)]" id="about">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-3xl text-center mb-16">
           <FadeInUp>
-            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--vital-mint)] text-[var(--vital-green)] text-xs font-bold uppercase tracking-widest mb-6">
-              Does This Sound Familiar?
+            <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--warm-beige)] text-[var(--muted-sage)] text-xs font-bold uppercase tracking-widest mb-6 border border-[var(--muted-sage)]/20">
+              Who We Help
             </div>
           </FadeInUp>
           <FadeInUp delay={0.1}>
-            <h2 className="font-serif text-4xl font-medium tracking-tight text-[#1C1917] sm:text-5xl text-balance">
+            <h2 className="font-serif text-4xl font-medium tracking-tight text-[var(--charcoal)] sm:text-5xl text-balance">
               Is This You?
             </h2>
           </FadeInUp>
           <FadeInUp delay={0.2}>
-            <p className="mt-6 text-xl leading-8 text-[#57534E]">
-              Over 65% of Nigerians have 1 or more of these chronic issues.
+            <p className="mt-6 text-xl leading-8 text-[var(--charcoal)]/70">
+              Over 65% of Nigerians have 1 or more of these chronic issues;
             </p>
           </FadeInUp>
         </div>
 
-        <div className="mx-auto mt-20 grid max-w-6xl grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {symptoms.map((symptom, index) => (
-            <FadeInUp key={symptom.title} delay={0.1 + index * 0.05} className="h-full">
-              <div className="h-full group relative rounded-[2rem] bg-white p-10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_rgba(22,163,74,0.08)] border border-transparent hover:border-[var(--vital-green)]/10">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[var(--vital-mint)] transition-colors group-hover:bg-[var(--vital-green)]">
-                  <symptom.icon className="h-8 w-8 text-[var(--vital-green)] transition-colors group-hover:text-white" />
+        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {points.map((point) => (
+            <StaggerItem key={point.title} variants={staggerItemVariants} className="h-full">
+              <div className="flex flex-col h-full bg-white rounded-[2rem] p-8 shadow-sm border border-[var(--muted-sage)]/5 hover:border-[var(--orange)]/20 hover:shadow-md transition-all duration-300 group">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--warm-beige)] text-[var(--muted-sage)] group-hover:bg-[var(--orange)] group-hover:text-white transition-colors duration-300 mb-6">
+                  <point.icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-8 font-serif text-2xl font-medium text-[#1C1917]">
-                  {symptom.title}
+                <h3 className="font-serif text-xl font-medium text-[var(--charcoal)] mb-3 leading-tight">
+                  {point.title}
                 </h3>
-                <p className="mt-4 text-base leading-relaxed text-[#57534E]">
-                  {symptom.description}
+                <p className="text-[15px] leading-relaxed text-[var(--charcoal)]/70">
+                  {point.description}
                 </p>
               </div>
-            </FadeInUp>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerChildren>
       </div>
     </section>
   )

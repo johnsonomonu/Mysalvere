@@ -1,17 +1,19 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Fraunces, Outfit } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { Toaster } from '@/components/ui/sonner'
 import './globals.css'
 
-const inter = Inter({ 
+const fraunces = Fraunces({ 
   subsets: ["latin"],
-  variable: '--font-inter',
+  variable: '--font-fraunces',
   display: 'swap',
+  axes: ['SOFT', 'WONK'],
 });
 
-const playfair = Playfair_Display({ 
+const outfit = Outfit({ 
   subsets: ["latin"],
-  variable: '--font-playfair',
+  variable: '--font-outfit',
   display: 'swap',
 });
 
@@ -51,9 +53,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
-      <body className="font-sans antialiased bg-[var(--stone)] text-[var(--charcoal)]" suppressHydrationWarning>
+    <html lang="en" className={`${fraunces.variable} ${outfit.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased bg-[var(--warm-beige)] text-[var(--charcoal)]" suppressHydrationWarning>
         {children}
+        <Toaster />
         <Analytics />
       </body>
     </html>

@@ -195,18 +195,6 @@ export const assessmentQuestions: AssessmentQuestion[] = [
       { value: 4, label: "Frequent waking", impact: { sleep: 3, stress: 3, hormones: 3 } },
     ],
   },
-  {
-    id: "stress_management",
-    category: "stress",
-    categoryLabel: "Stress & Emotional Health",
-    question: "How well do you recover after a stressful day?",
-    options: [
-      { value: 1, label: "I recover quickly", impact: { stress: 0 } },
-      { value: 2, label: "I need some time to recover", impact: { stress: 1 } },
-      { value: 3, label: "Stress lingers into the next day", impact: { stress: 2, hormones: 2 } },
-      { value: 4, label: "I rarely feel fully recovered", impact: { stress: 3, hormones: 3 } },
-    ],
-  },
 ]
 
 // ─── Zod Schema ───
@@ -222,7 +210,7 @@ export interface CategoryScore {
   label: string
   score: number       // average of question scores in this category (1-4)
   percentage: number  // normalized to 0-100 (higher = more concern)
-  level: "good" | "moderate" | "concerning" | "critical"
+  level: "Balanced" | "Mild" | "Moderate" | "High" | "Significant"
 }
 
 export interface AssessmentResult {
@@ -300,10 +288,11 @@ export function calculateAssessmentResult(data: AssessmentFormValues): Assessmen
     const percentage = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0
 
     let level: CategoryScore["level"]
-    if (percentage <= 25) level = "good"
-    else if (percentage <= 50) level = "moderate"
-    else if (percentage <= 75) level = "concerning"
-    else level = "critical"
+    if (percentage <= 20) level = "Balanced"
+    else if (percentage <= 40) level = "Mild"
+    else if (percentage <= 60) level = "Moderate"
+    else if (percentage <= 80) level = "High"
+    else level = "Significant"
 
     return {
       category,
@@ -349,7 +338,7 @@ function generateRecommendations(
   impactLevel: AssessmentResult["impactLevel"]
 ): string[] {
   const recommendations: string[] = []
-  const concerning = categoryScores.filter(c => c.level === "concerning" || c.level === "critical")
+  const concerning = categoryScores.filter(c => c.level === "High" || c.level === "Significant")
 
   for (const c of concerning) {
     switch (c.category) {

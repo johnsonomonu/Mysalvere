@@ -69,16 +69,16 @@ This checklist is based on the current codebase state and is ordered for practic
 
 ## 5) Data and RLS Validation
 
-- [ ] Apply SQL migrations on production database
+- [x] Apply SQL migrations on production database
   - [x] scripts/001_create_profiles.sql
   - [x] scripts/002_create_assessments.sql
   - [x] scripts/003_create_appointments.sql
-  - [ ] scripts/004_data_hardening_and_webhook_events.sql
-- [ ] Validate RLS policies with real test users
-  - [ ] USER can only read/write own rows
-  - [ ] ADMIN can read/manage allowed scopes
-- [ ] Add DB constraints where missing (unique keys, not null, enum checks)
-- [ ] Add idempotency for payment webhooks (avoid duplicate email sends)
+  - [x] scripts/004_data_hardening_and_webhook_events.sql
+- [x] Validate RLS policies with real test users
+  - [x] USER can only read/write own rows
+  - [x] ADMIN can read/manage allowed scopes
+- [x] Add DB constraints where missing (unique keys, not null, enum checks)
+- [x] Add idempotency for payment webhooks (avoid duplicate email sends)
 
 ---
 
@@ -88,31 +88,31 @@ This checklist is based on the current codebase state and is ordered for practic
   - [ ] URL points to /api/flutterwave/webhook
   - [ ] Hash secret matches FLUTTERWAVE_WEBHOOK_HASH
 - [ ] Confirm Resend sender domain is verified
-- [ ] Add webhook event logging table (event id, tx_ref, status, processed_at)
-- [ ] Add retry-safe behavior (skip already-processed successful payments)
-- [ ] Add alerting for webhook failures and email send failures
+- [x] Add webhook event logging table (event id, tx_ref, status, processed_at)
+- [x] Add retry-safe behavior (skip already-processed successful payments)
+- [x] Add alerting for webhook failures and email send failures
 
 ---
 
 ## 7) App Quality and Build Safety
 
 - [x] Remove TypeScript ignoreBuildErrors in next.config.mjs for production
-- [ ] Fix all TypeScript and lint errors
-- [ ] Add basic automated tests
-  - [ ] Auth flow test (signup/login/logout)
-  - [ ] Middleware route protection test
-  - [ ] RBAC test (USER denied /admin, ADMIN allowed)
-  - [ ] Webhook signature and success path tests
-- [ ] Add error boundaries/fallback pages where needed
+- [x] Fix all TypeScript and lint errors
+- [x] Add basic automated tests
+  - [x] Auth flow test (signup/login/logout)
+  - [x] Middleware route protection test
+  - [x] RBAC test (USER denied /admin, ADMIN allowed)
+  - [x] Webhook signature and success path tests
+- [x] Add error boundaries/fallback pages where needed
 
 ---
 
 ## 8) Security and Compliance
 
-- [ ] Add rate limiting for auth and webhook endpoints
-- [ ] Add CSRF strategy for sensitive form mutations (where applicable)
+- [x] Add rate limiting for auth and webhook endpoints
+- [x] Add CSRF strategy for sensitive form mutations (where applicable)
 - [ ] Verify secure cookie settings in production
-- [ ] Set strict headers (CSP, X-Frame-Options, Referrer-Policy)
+- [x] Set strict headers (CSP, X-Frame-Options, Referrer-Policy)
 - [ ] Review privacy policy and terms pages for production accuracy
 
 ---

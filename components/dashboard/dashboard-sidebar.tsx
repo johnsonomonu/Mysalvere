@@ -8,28 +8,28 @@ import { cn } from "@/lib/utils"
 import {
   ChevronLeft,
   ChevronRight,
-  ClipboardList,
   LayoutDashboard,
   Settings,
   CalendarDays,
+  CreditCard,
+  Shield,
   LogOut,
-  MessageCircle,
 } from "lucide-react"
 
 const navItems = [
   { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Assessment", href: "/assessment", icon: ClipboardList },
   { label: "Appointments", href: "/dashboard/appointments", icon: CalendarDays },
-  { label: "Messages", href: "/dashboard/messages", icon: MessageCircle },
+  { label: "Payments", href: "/dashboard/payments", icon: CreditCard },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
 
 interface DashboardSidebarProps {
+  isAdmin: boolean
   collapsed: boolean
   onToggleCollapsed: () => void
 }
 
-export function DashboardSidebar({ collapsed, onToggleCollapsed }: DashboardSidebarProps) {
+export function DashboardSidebar({ isAdmin, collapsed, onToggleCollapsed }: DashboardSidebarProps) {
   const pathname = usePathname()
   const router = useRouter()
 
@@ -95,16 +95,24 @@ export function DashboardSidebar({ collapsed, onToggleCollapsed }: DashboardSide
             </Link>
           )
         })}
-      </nav>
 
-      {!collapsed && (
-        <div className="mt-6 rounded-2xl bg-[#FAFAF9] p-4">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#A8A29E]">Need something fast?</p>
-          <Button asChild className="mt-3 w-full rounded-2xl">
-            <Link href="/assessment">Start assessment</Link>
-          </Button>
-        </div>
-      )}
+        {isAdmin && (
+          <Link
+            href="/admin/overview"
+            className={cn(
+              "flex items-center rounded-2xl px-4 py-3 text-sm font-medium transition-colors",
+              collapsed ? "justify-center" : "gap-3",
+              pathname.startsWith("/admin")
+                ? "bg-[#E8EDFF] text-[#1D4ED8]"
+                : "text-[#57534E] hover:bg-[#FAFAF9] hover:text-[#1C1917]"
+            )}
+            title="Admin Console"
+          >
+            <Shield className="h-4 w-4" />
+            {!collapsed && "Admin Console"}
+          </Link>
+        )}
+      </nav>
 
       <Button
         type="button"

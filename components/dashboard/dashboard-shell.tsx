@@ -6,7 +6,12 @@ import { ArrowLeft } from "lucide-react"
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar"
 import { cn } from "@/lib/utils"
 
-export function DashboardShell({ children }: { children: React.ReactNode }) {
+interface DashboardShellProps {
+  children: React.ReactNode
+  isAdmin: boolean
+}
+
+export function DashboardShell({ children, isAdmin }: DashboardShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   return (
@@ -30,6 +35,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
       <div className="mx-auto flex max-w-7xl gap-8 px-6 pt-8 pb-12 lg:px-8">
         <DashboardSidebar
+          isAdmin={isAdmin}
           collapsed={sidebarCollapsed}
           onToggleCollapsed={() => setSidebarCollapsed((value) => !value)}
         />

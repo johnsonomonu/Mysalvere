@@ -3,17 +3,32 @@
 import { useState } from "react"
 import { FadeInUp } from "@/components/motion"
 import { AdminStats } from "./admin-stats"
-import { AssessmentsTable } from "./assessments-table"
-import { UsersTable } from "./users-table"
+import { AssessmentsTable, type AdminAssessmentRow } from "./assessments-table"
+import { UsersTable, type AdminUserRow } from "./users-table"
 import { cn } from "@/lib/utils"
 
 type Tab = "assessments" | "users"
 
 interface AdminDashboardProps {
+  currentAdminId: string
   adminEmail: string
+  stats: {
+    totalUsers: number
+    totalAssessments: number
+    averageScore: number
+    adminCount: number
+  }
+  assessments: AdminAssessmentRow[]
+  users: AdminUserRow[]
 }
 
-export function AdminDashboard({ adminEmail }: AdminDashboardProps) {
+export function AdminDashboard({
+  currentAdminId,
+  adminEmail,
+  stats,
+  assessments,
+  users,
+}: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<Tab>("assessments")
 
   return (
@@ -32,7 +47,12 @@ export function AdminDashboard({ adminEmail }: AdminDashboardProps) {
 
       {/* Stats */}
       <FadeInUp delay={0.1}>
-        <AdminStats />
+        <AdminStats
+          totalUsers={stats.totalUsers}
+          totalAssessments={stats.totalAssessments}
+          averageScore={stats.averageScore}
+          adminCount={stats.adminCount}
+        />
       </FadeInUp>
 
       {/* Tabs */}
@@ -69,9 +89,9 @@ export function AdminDashboard({ adminEmail }: AdminDashboardProps) {
       <FadeInUp delay={0.3}>
         <div className="mt-6">
           {activeTab === "assessments" ? (
-            <AssessmentsTable />
+            <AssessmentsTable assessments={assessments} />
           ) : (
-            <UsersTable />
+            <UsersTable currentAdminId={currentAdminId} users={users} />
           )}
         </div>
       </FadeInUp>

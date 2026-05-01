@@ -18,9 +18,7 @@ export default function AboutPage() {
       <AboutHero />
       <FounderStory />
       <ValuesSection />
-      <div className="bg-white py-16">
-        <TheSalvereApproachSection />
-      </div>
+      <TheSalvereApproachSection />
       <Footer />
     </main>
   )

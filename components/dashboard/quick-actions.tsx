@@ -1,14 +1,14 @@
 "use client"
 
 import Link from "next/link"
-import { ClipboardList, Calendar, MessageCircle, Settings } from "lucide-react"
+import { LineChart, Calendar, CreditCard, Settings } from "lucide-react"
 
 const actions = [
   {
-    label: "New Assessment",
-    description: "Check your current wellness",
-    href: "/assessment",
-    icon: ClipboardList,
+    label: "View Progress",
+    description: "Review your trends and milestones",
+    href: "/dashboard",
+    icon: LineChart,
   },
   {
     label: "Book Session",
@@ -17,10 +17,10 @@ const actions = [
     icon: Calendar,
   },
   {
-    label: "Messages",
-    description: "Chat with your support team",
-    href: "/dashboard/messages",
-    icon: MessageCircle,
+    label: "Payments",
+    description: "Track your transaction status",
+    href: "/dashboard/payments",
+    icon: CreditCard,
   },
   {
     label: "Settings",
@@ -32,7 +32,7 @@ const actions = [
 
 export function QuickActions() {
   return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {actions.map((action) => (
         <Link
           key={action.label}

@@ -1,117 +1,143 @@
 "use client"
 
-import { FadeInUp } from "@/components/motion"
-import { 
-  Users, 
-  UserCircle2, 
-  Calendar, 
-  CheckCircle2, 
-  ArrowRight,
-  TrendingUp,
-  Target,
-  FlameKindling
-} from "lucide-react"
+import { FadeInUp, StaggerChildren, StaggerItem, staggerItemVariants } from "@/components/motion"
+import { Phone, Calendar, FileText, Activity, CheckCircle2, Star, Target, TrendingUp, FlameKindling, ArrowRight } from "lucide-react"
+import { BookSessionButton } from "@/components/book-session-button"
+import { cn } from "@/lib/utils"
 
 const services = [
   {
-    id: "individual",
-    icon: UserCircle2,
-    title: "1:1 Health Coaching",
-    description: "Personalized support to help you build a healthy lifestyle by sharing a meal plan, charting your health goals, and helping you stay motivated.",
+    icon: Phone,
+    title: "Discovery Call",
+    price: "₦25,000",
+    description: "The first step in working with Salvere. We discuss your concerns and determine the best way to proceed.",
     features: [
-      "Custom whole-food meal plans",
-      "Bi-weekly private check-ins",
-      "Personalized goal tracking (SalvereTraker)",
-      "Daily motivation and guidance",
-      "Root-cause analysis of symptoms"
+      "Discuss current health challenges",
+      "Understand your expectations",
+      "Identify potential areas of concern",
+      "Guided onboarding process"
     ],
-    color: "bg-[var(--vital-mint)]",
-    iconColor: "text-[var(--vital-green)]",
-    level: "Individual Focus"
+    cta: "Book Discovery Call",
+    href: "/book/discovery",
+    featured: false
   },
   {
-    id: "corporate",
-    icon: Users,
-    title: "Corporate Wellness Programs",
-    description: "Structured programs designed to help teams perform at their best without burning out, boosting both productivity and company culture.",
-    features: [
-      "Executive health audits",
-      "Team productivity workshops",
-      "Burnout prevention strategies",
-      "Sustainable performance systems",
-      "Custom reporting for leadership"
-    ],
-    color: "bg-[#1C1917]/5",
-    iconColor: "text-[#1C1917]",
-    level: "Organizational Focus"
-  },
-  {
-    id: "open-house",
     icon: Calendar,
-    title: "The Salvere Open House",
-    description: "A monthly, practical, and relaxed session for professionals looking to improve their health and performance sustainably within a community.",
+    title: "Single Session",
+    price: "₦50,000",
+    description: "Ideal if you want clarity and direction without ongoing support.",
     features: [
-      "Live Q&A with specialists",
-      "Community health discussions",
-      "Practical health workshops",
-      "Networking with like-minds",
-      "Exclusive resource access"
+      "Comprehensive root cause analysis",
+      "Filled Forms, food journal & labs analysis",
+      "Clear explanation of findings",
+      "Practical immediate next steps"
     ],
-    color: "bg-[var(--vital-green)]/10",
-    iconColor: "text-[var(--vital-green)]",
-    level: "Monthly Sessions"
-  }
+    cta: "Book Single Session",
+    href: "/book/single",
+    featured: false
+  },
+  {
+    icon: FileText,
+    title: "Salvere Personalized Guide",
+    price: "₦80,000",
+    description: "A documented, actionable guide you can follow daily independently.",
+    features: [
+      "Comprehensive root cause analysis",
+      "Personalized guide document",
+      "Therapeutic meals & lifestyle protocol",
+      "One deep-dive session"
+    ],
+    cta: "Get Your Guide",
+    href: "/book/guide",
+    featured: true
+  },
+  {
+    icon: Activity,
+    title: "Salvere Management Package",
+    price: "₦150,000 / month",
+    description: "Continuous care model for consistent guidance and accountability.",
+    features: [
+      "Comprehensive root cause analysis",
+      "Personalized health guide",
+      "Ongoing implementation support",
+      "Four sessions per month"
+    ],
+    cta: "Start Management",
+    href: "/book/management",
+    featured: false
+  },
 ]
 
 export function ServicesGrid() {
   return (
-    <section className="py-24 lg:py-32 bg-white overflow-hidden">
+    <section className="py-24 lg:py-32 bg-white" id="services-grid">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {services.map((service, index) => (
-            <FadeInUp key={service.id} delay={0.1 + index * 0.1}>
-              <div className="group relative flex flex-col h-full rounded-[3rem] p-10 bg-[#F9FAFB] border border-transparent hover:border-[var(--vital-green)]/10 hover:shadow-2xl hover:bg-white transition-all duration-500">
-                <div className={`mb-10 flex h-20 w-20 items-center justify-center rounded-3xl ${service.color} ${service.iconColor} shadow-sm group-hover:scale-110 transition-transform duration-500`}>
-                  <service.icon className="h-10 w-10" />
+        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.map((service) => (
+            <StaggerItem key={service.title} variants={staggerItemVariants} className="h-full">
+              <div className={cn(
+                "group flex flex-col h-full rounded-[2.5rem] p-8 transition-all duration-300 relative",
+                service.featured 
+                  ? "bg-white border-2 border-[var(--orange)] shadow-xl shadow-orange-900/5 -translate-y-2 z-10 hover:shadow-2xl" 
+                  : "bg-[var(--warm-beige)] border border-transparent hover:border-[var(--muted-sage)]/20 shadow-sm hover:shadow-xl hover:scale-[1.02]"
+              )}>
+                {service.featured && (
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[var(--orange)] text-white text-[10px] font-bold uppercase tracking-widest py-1.5 px-4 rounded-full shadow-md whitespace-nowrap flex items-center gap-1.5">
+                    <Star className="h-3 w-3 fill-current" /> Recommended
+                  </div>
+                )}
+                
+                <div className={cn(
+                  "flex h-12 w-12 items-center justify-center rounded-2xl mb-6 shadow-sm transition-all duration-300",
+                  service.featured ? "bg-[var(--orange)]/10 text-[var(--orange)]" : "bg-white text-[var(--muted-sage)] group-hover:bg-[var(--muted-sage)] group-hover:text-white"
+                )}>
+                  <service.icon className="h-6 w-6" />
                 </div>
                 
-                <div className="mb-4 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#A8A29E]">
-                  <span className="h-1 w-1 rounded-full bg-[var(--vital-green)]" />
-                  {service.level}
-                </div>
-                
-                <h3 className="font-serif text-3xl font-medium tracking-tight text-[#1C1917] mb-6">
+                <h3 className="font-serif text-2xl font-medium text-[var(--charcoal)] mb-1 leading-tight">
                   {service.title}
                 </h3>
-                
-                <p className="text-[#57534E] text-lg leading-relaxed font-light mb-10 flex-grow">
-                  {service.description}
+                <p className={cn(
+                  "text-lg font-bold mb-4",
+                  service.featured ? "text-[var(--orange)]" : "text-[var(--muted-sage)]"
+                )}>
+                  {service.price}
                 </p>
                 
-                <div className="space-y-4 mb-12">
-                  {service.features.map((feature) => (
-                    <div key={feature} className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-[var(--vital-green)] shrink-0 mt-0.5" />
-                      <span className="text-sm font-medium text-[#1C1917]">{feature}</span>
-                    </div>
+                <p className="text-sm text-[var(--charcoal)]/70 leading-relaxed mb-6">
+                  {service.description}
+                </p>
+
+                <ul className="space-y-3 mb-8 flex-grow">
+                  {service.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-[13px] text-[var(--charcoal)]/80">
+                      <CheckCircle2 className={cn("h-4 w-4 shrink-0 mt-0.5", service.featured ? "text-[var(--orange)]" : "text-[var(--muted-sage)]")} />
+                      <span>{feature}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
                 
-                <button className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[var(--vital-green)] hover:translate-x-1 transition-transform">
-                  Learn More
-                  <ArrowRight className="h-4 w-4" />
-                </button>
+                <div className="mt-auto pt-6 border-t border-[var(--charcoal)]/10">
+                  <BookSessionButton 
+                    variant={service.featured ? "vital" : "outline"} 
+                    className="w-full rounded-full h-12"
+                    href={service.href}
+                    isExternal={false}
+                  >
+                    {service.cta}
+                  </BookSessionButton>
+                </div>
               </div>
-            </FadeInUp>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerChildren>
 
         {/* Process Visual */}
         <div className="mt-40 border-t border-[#E7E5E4] pt-32">
           <FadeInUp>
             <div className="text-center mb-24">
               <h2 className="font-serif text-4xl font-medium tracking-tight text-[#1C1917] sm:text-5xl">
-                Our Proven Pathway to <span className="text-[var(--vital-green)]">Vitality.</span>
+                Our Proven Pathway to <span className="text-[var(--orange)]">Vitality.</span>
               </h2>
               <p className="mt-4 text-xl text-[#57534E] max-w-2xl mx-auto font-light">
                 We believe in systems over shortcuts. Here is how we guide you through the Salvere restoration model.
@@ -135,8 +161,8 @@ function ProcessItem({ step, title, desc, icon: Icon }: { step: string; title: s
   return (
     <FadeInUp>
       <div className="group">
-        <div className="relative mb-12 inline-flex h-24 w-24 items-center justify-center rounded-[2.5rem] bg-white border border-[#E7E5E4] shadow-sm group-hover:border-[var(--vital-green)] transition-all duration-500">
-          <Icon className="h-10 w-10 text-[var(--vital-green)]" />
+        <div className="relative mb-12 inline-flex h-24 w-24 items-center justify-center rounded-[2.5rem] bg-white border border-[#E7E5E4] shadow-sm group-hover:border-[var(--orange)] transition-all duration-500">
+          <Icon className="h-10 w-10 text-[var(--orange)]" />
           <div className="absolute -bottom-4 bg-[#1C1917] text-white px-3 py-1 rounded-full text-xs font-bold tracking-widest">
             STEP {step}
           </div>

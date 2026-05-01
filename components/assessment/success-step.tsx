@@ -66,8 +66,11 @@ export function SuccessStep() {
           <p className="text-sm text-[#57534E] mb-4">
             Ready to start your wellness journey?
           </p>
-          <BookSessionButton sessionType="discovery" variant="secondary">
-            Book a Discovery Call
+          <BookSessionButton 
+            variant="secondary"
+            href="/services"
+          >
+            Book Your Session
           </BookSessionButton>
         </div>
       </FadeInUp>

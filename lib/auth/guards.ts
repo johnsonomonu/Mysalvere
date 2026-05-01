@@ -11,6 +11,10 @@ interface UserWithRole {
   role: string | null
 }
 
+function isAdminRole(role: string | null | undefined): boolean {
+  return role?.trim()?.toUpperCase() === "ADMIN"
+}
+
 export async function requireUser(redirectTo = "/auth/login"): Promise<AuthenticatedUser> {
   const supabase = await createClient()
 
@@ -52,7 +56,7 @@ export async function requireAdmin(): Promise<UserWithRole> {
 
   const role = profile?.role ?? null
 
-  if (role !== "ADMIN") {
+  if (!isAdminRole(role)) {
     redirect("/dashboard")
   }
 
