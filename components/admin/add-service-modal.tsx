@@ -21,14 +21,24 @@ const serviceSchema = z.object({
   is_featured: z.boolean().default(false),
 })
 
+type ServiceFormValues = z.infer<typeof serviceSchema>
+
 export function AddServiceModal() {
   const [open, setOpen] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm({
+  const { register, handleSubmit, reset, formState: { errors }, watch, setValue } = useForm<ServiceFormValues>({
     resolver: zodResolver(serviceSchema),
-    defaultValues: { cta_text: "Book Now", is_featured: false }
+    defaultValues: {
+      name: "",
+      slug: "",
+      price: "",
+      description: "",
+      features: "",
+      cta_text: "Book Now",
+      is_featured: false
+    }
   })
 
   const nameVal = watch("name")
