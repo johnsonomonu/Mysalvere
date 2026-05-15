@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { ShieldCheck, ArrowLeft, Loader2 } from "lucide-react"
 import { useState } from "react"
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3"
 
 interface PaymentStepProps {
   tier: { name: string; price: number }
@@ -14,15 +15,41 @@ interface PaymentStepProps {
 export function PaymentStep({ tier, formData, onSuccess, onBack }: PaymentStepProps) {
   const [isProcessing, setIsProcessing] = useState(false)
 
+  const config = {
+    public_key: "FLWPUBK-140927192c53f0a5fb999d19d9f50e3d-X",
+    tx_ref: `salvere-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+    amount: tier.price,
+    currency: "NGN" as const,
+    payment_options: "card,banktransfer,ussd",
+    customer: {
+      email: formData?.email || "customer@mysalvere.com",
+      name: formData?.fullName || "Salvere Client",
+      phone_number: formData?.phone || "",
+    },
+    customizations: {
+      title: "Salvere Health",
+      description: `Payment for ${tier.name}`,
+      logo: "",
+    },
+  }
+
+  const handleFlutterPayment = useFlutterwave(config)
+
   const handlePayment = () => {
     setIsProcessing(true)
-    
-    // Simulate Flutterwave Checkout
-    // In production, you would call window.FlutterwaveCheckout({...})
-    setTimeout(() => {
-      setIsProcessing(false)
-      onSuccess()
-    }, 2000)
+    handleFlutterPayment({
+      callback: (response) => {
+        console.log("Payment response:", response)
+        closePaymentModal()
+        setIsProcessing(false)
+        if (response.status === "successful" || response.status === "completed") {
+          onSuccess()
+        }
+      },
+      onClose: () => {
+        setIsProcessing(false)
+      },
+    })
   }
 
   return (
@@ -48,8 +75,8 @@ export function PaymentStep({ tier, formData, onSuccess, onBack }: PaymentStepPr
             <p className="text-4xl font-serif font-medium text-[var(--charcoal)]">₦{tier.price.toLocaleString()}</p>
           </div>
           <div className="text-right">
-            <p className="text-sm font-medium text-[var(--charcoal)]">{formData.fullName}</p>
-            <p className="text-xs text-[var(--charcoal)]/50">{formData.email}</p>
+            <p className="text-sm font-medium text-[var(--charcoal)]">{formData?.fullName}</p>
+            <p className="text-xs text-[var(--charcoal)]/50">{formData?.email}</p>
           </div>
         </div>
       </div>

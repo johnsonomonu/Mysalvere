@@ -100,14 +100,26 @@ export function AuthStep({ onSuccess }: AuthStepProps) {
 
       if (signUpError) throw signUpError
       
-      // If email confirmation is required, we might need a different state, 
-      // but for simplicity and immediate feedback, we'll try to sign them in or wait for session
+      // Try to get session immediately (works when email confirmation is disabled)
       const { data: { session } } = await supabase.auth.getSession()
       if (session) {
         onSuccess()
-      } else {
-        setError("Account created! Please check your email to confirm and then sign in to see your results.")
+        return
       }
+
+      // If no session yet, try signing in directly with the same credentials
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: data.email,
+        password: data.password,
+      })
+
+      if (!signInError) {
+        onSuccess()
+        return
+      }
+
+      // If all else fails, show a message but still allow proceeding
+      setError("Account created! Please check your email to confirm, then sign in.")
     } catch (err: any) {
       setError(err.message)
     } finally {

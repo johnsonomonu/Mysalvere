@@ -33,74 +33,95 @@ const pillars = [
 
 export function TheSalvereApproachSection() {
   return (
-    <section className="py-16 lg:py-24 bg-[var(--warm-beige)]" id="the-approach">
+    <section className="py-24 lg:py-32 bg-[var(--warm-beige)]" id="the-approach">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-start">
-          
-          {/* Left Column: Founder Story */}
-          <div className="lg:sticky lg:top-32">
-            <FadeInUp>
-              <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--orange)]/10 text-[var(--orange)] text-xs font-bold uppercase tracking-widest mb-6">
-                Our Mission
-              </div>
-            </FadeInUp>
-            <FadeInUp delay={0.1}>
-              <h2 className="font-serif text-4xl font-medium tracking-tight text-[var(--charcoal)] sm:text-5xl leading-tight">
-                At Salvere, we focus on restoring your system — <span className="text-[var(--orange)]">not just managing symptoms.</span>
-              </h2>
-            </FadeInUp>
-            
-            <FadeInUp delay={0.2}>
-              <div className="mt-10 space-y-6 text-lg leading-relaxed text-[var(--charcoal)]/70 font-light">
-                <p>
-                  For Dewumi Ebuk, this mission is deeply personal. After working in both clinical and corporate environments, I began to notice a pattern. Brilliant, hardworking people were constantly exhausted, and always on one stimulant or the other.
-                </p>
-                <p>
-                  Not because they lacked discipline, or didn’t know right from wrong, but because their bodies were overwhelmed and burnt-out.
-                </p>
-                <p className="font-medium text-[var(--charcoal)]">
-                  That realization changed everything.
-                </p>
-                <div className="p-8 bg-[var(--soft-white)] rounded-3xl border border-[var(--muted-sage)]/15 shadow-sm relative overflow-hidden group hover:shadow-xl transition-all duration-500">
-                  <div className="absolute top-0 left-0 w-2 h-full bg-[var(--orange)]" />
-                  <p className="text-[var(--charcoal)] font-medium italic relative z-10">
-                    "Today, I help professionals and organizations build systems that support both health and performance — so they can thrive without burning out."
-                  </p>
-                </div>
-              </div>
-            </FadeInUp>
-          </div>
+        <div className="max-w-3xl mx-auto text-center mb-20">
+          <h2 className="label-caps mb-4">The Salvere Approach</h2>
+          <h3 className="font-serif text-4xl lg:text-5xl font-medium text-[var(--charcoal)] mb-8">
+            Your health is not defined by a single result, symptom, or diagnosis. <span className="text-[var(--orange)]">It is shaped by patterns.</span>
+          </h3>
+        </div>
 
-          {/* Right Column: Pillars */}
-          <div className="lg:mt-0 mt-8">
-            <FadeInUp delay={0.3}>
-              <h3 className="text-2xl font-serif font-medium text-[var(--charcoal)] mb-12">
-                Our approach is built on:
-              </h3>
-            </FadeInUp>
-            
-            <div className="space-y-6">
-              {pillars.map((pillar, index) => (
-                <FadeInUp key={pillar.title} delay={0.3 + index * 0.1}>
-                  <div className="group flex gap-6 p-8 rounded-[2rem] bg-[var(--soft-white)] border border-transparent hover:border-[var(--muted-sage)]/15 hover:shadow-[0_20px_50px_rgba(122,143,123,0.07)] transition-all duration-300">
-                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-[var(--warm-beige)] group-hover:bg-[var(--muted-sage)] transition-colors duration-300">
-                      <pillar.icon className="h-8 w-8 text-[var(--muted-sage)] group-hover:text-white transition-colors duration-300" />
-                    </div>
-                    <div>
-                      <h4 className="text-xl font-medium text-[var(--charcoal)] group-hover:text-[var(--orange)] transition-colors duration-300">
-                        {pillar.title}
-                      </h4>
-                      <p className="mt-2 text-base text-[var(--charcoal)]/70 leading-relaxed">
-                        {pillar.description}
-                      </p>
-                    </div>
-                  </div>
-                </FadeInUp>
-              ))}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center bg-[var(--soft-white)] rounded-[3rem] p-8 lg:p-16 shadow-sm border border-[var(--charcoal)]/5">
+          
+          {/* Left: Traditional vs Salvere */}
+          <div className="space-y-12">
+            <div>
+              <h4 className="text-xl font-bold uppercase tracking-widest text-[var(--muted-sage)] mb-6">Most approaches focus on:</h4>
+              <ul className="space-y-4">
+                {["Isolated lab values", "Individual symptoms", "Short-term fixes"].map((item) => (
+                  <li key={item} className="flex items-center gap-3 text-lg text-[var(--charcoal)]/70">
+                    <span className="h-2 w-2 rounded-full bg-[var(--muted-sage)]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="p-8 bg-[var(--muted-sage)]/10 rounded-2xl border border-[var(--muted-sage)]/20">
+              <h4 className="text-xl font-bold uppercase tracking-widest text-[var(--muted-sage)] mb-6">At Salvere, we connect:</h4>
+              <ul className="space-y-4">
+                {["Lab results", "Lifestyle & habits", "Nutrition & hydration", "Body patterns"].map((item) => (
+                  <li key={item} className="flex items-center gap-3 text-lg font-medium text-[var(--charcoal)]">
+                    <span className="h-2 w-2 rounded-full bg-[var(--orange)]" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-xl font-bold uppercase tracking-widest text-[var(--muted-sage)] mb-6">To understand:</h4>
+              <ul className="space-y-4">
+                {["What is happening", "Why it is happening", "What to do next"].map((item) => (
+                  <li key={item} className="flex items-center gap-3 text-lg font-bold text-[var(--charcoal)]">
+                    <span className="text-[var(--orange)]">👉</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
+          {/* Right: Flow Visualization */}
+          <div className="relative flex flex-col items-center justify-center space-y-8">
+            <div className="absolute inset-0 bg-[var(--muted-sage)]/5 rounded-[2rem] -rotate-2" />
+            
+            {[
+              { label: "Lab Results", icon: "🔬" },
+              { label: "Daily Habits", icon: "🥗" },
+              { label: "Body Patterns", icon: "📊" },
+              { label: "Action Plan", icon: "📝", featured: true }
+            ].map((step, index, array) => (
+              <div key={step.label} className="relative z-10 flex flex-col items-center">
+                <FadeInUp delay={0.1 * index}>
+                  <div className={`
+                    w-64 py-6 rounded-2xl flex flex-col items-center justify-center shadow-md border transition-all duration-300
+                    ${step.featured 
+                      ? "bg-[var(--orange)] border-[var(--orange)] text-white scale-110 shadow-orange-500/20" 
+                      : "bg-white border-[var(--muted-sage)]/20 text-[var(--charcoal)]"}
+                  `}>
+                    <span className="text-3xl mb-2">{step.icon}</span>
+                    <span className="font-bold uppercase tracking-wider">{step.label}</span>
+                  </div>
+                </FadeInUp>
+                {index < array.length - 1 && (
+                  <FadeInUp delay={0.1 * index + 0.05}>
+                    <div className="h-8 w-px bg-gradient-to-b from-[var(--muted-sage)] to-transparent my-2" />
+                    <div className="text-[var(--muted-sage)] text-xl animate-bounce">↓</div>
+                  </FadeInUp>
+                )}
+              </div>
+            ))}
+          </div>
+
         </div>
+
+        <FadeInUp delay={0.5} className="mt-16 text-center">
+          <p className="text-2xl font-serif italic text-[var(--charcoal)]">
+            "When these pieces are connected, your next steps become clear."
+          </p>
+        </FadeInUp>
       </div>
     </section>
   )

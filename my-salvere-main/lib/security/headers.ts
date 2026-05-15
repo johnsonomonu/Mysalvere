@@ -3,19 +3,20 @@ type SecurityHeaders = Record<string, string>
 function buildContentSecurityPolicy(): string {
   const scriptSrc =
     process.env.NODE_ENV === 'development'
-      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com"
-      : "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com"
+      ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://checkout.flutterwave.com"
+      : "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://checkout.flutterwave.com"
 
   return [
     "default-src 'self'",
     "base-uri 'self'",
     "frame-ancestors 'none'",
+    "frame-src 'self' https://checkout.flutterwave.com https://flutterwave.com https://*.flutterwave.com https://*.f4b-flutterwave.com",
     "form-action 'self'",
     "img-src 'self' data: https:",
     scriptSrc,
     "style-src 'self' 'unsafe-inline'",
     "font-src 'self' data:",
-    "connect-src 'self' https://*.supabase.co https://api.flutterwave.com https://api.resend.com https://vitals.vercel-insights.com",
+    "connect-src 'self' https://*.supabase.co https://api.flutterwave.com https://*.flutterwave.com https://*.ravepay.co https://api.resend.com https://vitals.vercel-insights.com",
     "object-src 'none'",
     "upgrade-insecure-requests",
   ].join('; ')

@@ -4,6 +4,7 @@ import { motion, type HTMLMotionProps, type Variants } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 interface FadeInUpProps extends HTMLMotionProps<"div"> {
+  children?: React.ReactNode
   delay?: number
   duration?: number
   distance?: number
@@ -36,6 +37,7 @@ export function FadeInUp({
 }
 
 interface StaggerChildrenProps extends HTMLMotionProps<"div"> {
+  children?: React.ReactNode
   staggerDelay?: number
   initialDelay?: number
 }

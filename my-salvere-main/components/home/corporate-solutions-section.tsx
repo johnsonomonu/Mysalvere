@@ -7,59 +7,70 @@ import Image from "next/image"
 
 export function CorporateSolutionsSection() {
   return (
-    <section className="py-16 lg:py-24 bg-[var(--charcoal)] overflow-hidden" id="corporate">
+    <section className="py-24 lg:py-32 bg-[var(--warm-beige)] border-t border-[var(--charcoal)]/5" id="corporate">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          
-          <div className="order-2 lg:order-1 relative">
-            <FadeInUp>
-              {/* Abstract pattern for background */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-[var(--orange)]/20 to-transparent rounded-full blur-2xl opacity-50" />
-              <div className="relative rounded-[3rem] overflow-hidden border border-white/10 aspect-square lg:aspect-[4/5] bg-[var(--soft-white)]/5 backdrop-blur-sm p-8 flex flex-col justify-center text-center">
-                <div className="absolute inset-0 opacity-20" style={{
-                  backgroundImage: `radial-gradient(circle at 1px 1px, var(--muted-sage) 1px, transparent 0)`,
-                  backgroundSize: '24px 24px'
-                }} />
-                <h3 className="relative font-serif text-3xl font-medium text-white italic mb-6">
-                  "Organizations that prioritize employee health see reduced turnover, better focus, and increased productivity."
-                </h3>
+        <div className="max-w-4xl mx-auto text-center mb-20">
+          <FadeInUp>
+            <>
+              <h2 className="label-caps mb-4">For Organizations</h2>
+              <h3 className="font-serif text-4xl lg:text-5xl font-medium text-[var(--charcoal)] mb-8">
+                Most organizations invest in employee health screenings. <span className="text-[var(--orange)]">Few translate the results into meaningful action.</span>
+              </h3>
+            </>
+          </FadeInUp>
+        </div>
+
+        <div className="bg-white rounded-[3rem] p-8 lg:p-16 shadow-sm border border-[var(--charcoal)]/5">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div className="space-y-8">
+              <div className="flex flex-col items-center justify-center p-8 bg-[var(--warm-beige)]/30 rounded-2xl border border-dashed border-[var(--charcoal)]/10">
+                <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left text-[var(--charcoal)]/60 font-medium italic">
+                  <span>Employees complete tests</span>
+                  <span className="text-[var(--orange)] hidden md:inline">→</span>
+                  <span>Results are delivered</span>
+                  <span className="text-[var(--orange)] hidden md:inline">→</span>
+                  <span className="text-red-500 font-bold">No action</span>
+                </div>
               </div>
-            </FadeInUp>
+
+              <div className="space-y-6">
+                <h4 className="text-2xl font-serif font-medium text-[var(--charcoal)]">We bridge the gap between health data and real-life action</h4>
+                <ul className="space-y-4">
+                  {[
+                    "Interpret lab results",
+                    "Identify early patterns",
+                    "Provide structured guidance"
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-lg text-[var(--charcoal)]/80">
+                      <span className="h-2 w-2 rounded-full bg-[var(--orange)]" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="relative aspect-square lg:aspect-auto lg:h-[400px] rounded-3xl overflow-hidden shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-[var(--muted-sage)]/20 to-transparent" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-12 text-center">
+                <p className="text-3xl font-serif italic text-[var(--charcoal)] mb-8">
+                  "Health screenings are only the first step. Action is what changes outcomes."
+                </p>
+                <div className="w-16 h-1 bg-[var(--orange)]" />
+              </div>
+            </div>
+
           </div>
 
-          <div className="order-1 lg:order-2">
-            <FadeInUp>
-              <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--orange)]/10 text-[var(--orange)] text-xs font-bold uppercase tracking-widest mb-6">
-                Corporate Solutions
-              </div>
-            </FadeInUp>
-            <FadeInUp delay={0.1}>
-              <h2 className="font-serif text-4xl font-medium tracking-tight text-white sm:text-5xl text-balance">
-                Healthy teams perform better.
-              </h2>
-            </FadeInUp>
-            <FadeInUp delay={0.2}>
-              <p className="mt-6 text-xl leading-relaxed text-white/70 font-light">
-                Our Corporate Wellness Programs are structured to help your team perform at their best without burning out. We provide practical workshops, group coaching, and sustainable health strategies designed for busy professionals.
-              </p>
-            </FadeInUp>
-            
-            <FadeInUp delay={0.3}>
-              <div className="mt-12 flex flex-col sm:flex-row items-center gap-5">
-                <Button variant="vital" size="xl" className="w-full sm:w-auto shadow-2xl shadow-orange-600/20" asChild>
-                  <Link href="/corporate">
-                    Partner with Us
-                  </Link>
-                </Button>
-                <Button variant="outline" size="xl" className="w-full sm:w-auto border-white/20 text-white hover:bg-white hover:text-[var(--charcoal)] transition-all duration-300" asChild>
-                  <Link href="/services#corporate">
-                    View Programs
-                  </Link>
-                </Button>
-              </div>
-            </FadeInUp>
+          <div className="mt-16 pt-16 border-t border-[var(--charcoal)]/5 flex flex-col sm:flex-row items-center justify-center gap-5">
+            <Button size="xl" className="w-full sm:w-auto bg-[var(--orange)] hover:bg-[var(--orange-hover)] text-white" asChild>
+              <Link href="/corporate">Explore Corporate Solutions</Link>
+            </Button>
+            <Button variant="outline" size="xl" className="w-full sm:w-auto border-[var(--charcoal)]/20 text-[var(--charcoal)] hover:bg-[var(--warm-beige)]" asChild>
+              <Link href="/book">Request a Consultation</Link>
+            </Button>
           </div>
-          
         </div>
       </div>
     </section>
