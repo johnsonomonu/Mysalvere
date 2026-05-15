@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { ShieldCheck, ArrowLeft, Loader2 } from "lucide-react"
-import { useState } from "react"
-import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3"
+import { useState, useEffect, useCallback } from "react"
 
 interface PaymentStepProps {
   tier: { name: string; price: number }
@@ -12,45 +11,85 @@ interface PaymentStepProps {
   onBack: () => void
 }
 
+declare global {
+  interface Window {
+    FlutterwaveCheckout?: (config: any) => void
+  }
+}
+
 export function PaymentStep({ tier, formData, onSuccess, onBack }: PaymentStepProps) {
   const [isProcessing, setIsProcessing] = useState(false)
+  const [sdkReady, setSdkReady] = useState(false)
+  const [sdkError, setSdkError] = useState(false)
 
-  const config = {
-    public_key: "FLWPUBK-140927192c53f0a5fb999d19d9f50e3d-X",
-    tx_ref: `salvere-${Date.now()}-${Math.random().toString(36).slice(2)}`,
-    amount: tier.price,
-    currency: "NGN" as const,
-    payment_options: "card,banktransfer,ussd",
-    customer: {
-      email: formData?.email || "customer@mysalvere.com",
-      name: formData?.fullName || "Salvere Client",
-      phone_number: formData?.phone || "",
-    },
-    customizations: {
-      title: "Salvere Health",
-      description: `Payment for ${tier.name}`,
-      logo: "",
-    },
-  }
+  // Load Flutterwave inline script on mount
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.FlutterwaveCheckout) {
+      setSdkReady(true)
+      return
+    }
 
-  const handleFlutterPayment = useFlutterwave(config)
+    const existingScript = document.querySelector(
+      'script[src="https://checkout.flutterwave.com/v3.js"]'
+    )
+    if (existingScript) {
+      // Script tag exists but may not be loaded yet
+      existingScript.addEventListener("load", () => setSdkReady(true))
+      existingScript.addEventListener("error", () => setSdkError(true))
+      // If it's already loaded
+      if (window.FlutterwaveCheckout) setSdkReady(true)
+      return
+    }
 
-  const handlePayment = () => {
+    const script = document.createElement("script")
+    script.src = "https://checkout.flutterwave.com/v3.js"
+    script.async = true
+    script.onload = () => setSdkReady(true)
+    script.onerror = () => setSdkError(true)
+    document.body.appendChild(script)
+
+    return () => {
+      // Don't remove the script on unmount — it can be reused
+    }
+  }, [])
+
+  const handlePayment = useCallback(() => {
+    if (!window.FlutterwaveCheckout) {
+      console.error("Flutterwave SDK not loaded")
+      setSdkError(true)
+      return
+    }
+
     setIsProcessing(true)
-    handleFlutterPayment({
-      callback: (response) => {
+
+    window.FlutterwaveCheckout({
+      public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY || "FLWPUBK-140927192c53f0a5fb999d19d9f50e3d-X",
+      tx_ref: `salvere-${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      amount: tier.price,
+      currency: "NGN",
+      payment_options: "card,banktransfer,ussd",
+      customer: {
+        email: formData?.email || "customer@mysalvere.com",
+        name: formData?.fullName || "Salvere Client",
+        phone_number: formData?.phone || "",
+      },
+      customizations: {
+        title: "Salvere Health",
+        description: `Payment for ${tier.name}`,
+        logo: "",
+      },
+      callback: (response: any) => {
         console.log("Payment response:", response)
-        closePaymentModal()
         setIsProcessing(false)
         if (response.status === "successful" || response.status === "completed") {
           onSuccess()
         }
       },
-      onClose: () => {
+      onclose: () => {
         setIsProcessing(false)
       },
     })
-  }
+  }, [tier, formData, onSuccess])
 
   return (
     <div className="space-y-8 text-center">
@@ -82,15 +121,25 @@ export function PaymentStep({ tier, formData, onSuccess, onBack }: PaymentStepPr
       </div>
 
       <div className="space-y-4">
+        {sdkError && (
+          <p className="text-sm text-red-500">
+            Payment service failed to load. Please refresh the page and try again.
+          </p>
+        )}
         <Button 
           onClick={handlePayment} 
-          disabled={isProcessing}
+          disabled={isProcessing || !sdkReady || sdkError}
           className="w-full h-14 rounded-2xl text-lg bg-[var(--orange)] hover:bg-[var(--orange)]/90 flex items-center justify-center gap-2"
         >
           {isProcessing ? (
             <>
               <Loader2 className="h-5 w-5 animate-spin" />
               Processing Securely...
+            </>
+          ) : !sdkReady ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              Loading Payment...
             </>
           ) : (
             `Pay ₦${tier.price.toLocaleString()} via Flutterwave`
