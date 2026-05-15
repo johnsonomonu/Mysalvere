@@ -4,7 +4,7 @@ function buildContentSecurityPolicy(): string {
   const scriptSrc =
     process.env.NODE_ENV === 'development'
       ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://checkout.flutterwave.com"
-      : "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://checkout.flutterwave.com"
+      : "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com https://checkout.flutterwave.com"
 
   return [
     "default-src 'self'",
@@ -29,7 +29,7 @@ export function buildSecurityHeaders(): SecurityHeaders {
     'X-Frame-Options': 'DENY',
     'X-Content-Type-Options': 'nosniff',
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-    'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
   }
 
   if (process.env.NODE_ENV === 'production') {
