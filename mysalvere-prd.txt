@@ -1,0 +1,539 @@
+Here is the Salvere website PDR in plain text: 
+SALVERE HEALTH — WEBSITE PRODUCT DESIGN REQUIREMENTS (PDR) 
+BRAND IDENTITY 
+Brand Colors 
+• Primary Accent (Orange): #F47C2A — used for all buttons and highlights 
+• Deep Charcoal: #2E2E2E — used for all body text 
+• Soft White: #F9F9F7 — used for light section backgrounds 
+• Warm Beige: #EFEAE4 — used for section backgrounds 
+• Muted Sage Green: #7A8F7B — used for hero/intro areas 
+Typography Adapt fonts from the Parsley Health website (https://www.parsleyhealth.com) as 
+the design reference. 
+Design Reference https://www.parsleyhealth.com — all sections should be modeled on the 
+layout, spacing, and feel of this site while using Salvere's own brand colors, content, and 
+identity. 
+SITE MAP 
+• Home 
+• Start Here 
+• Services  
+o Discovery Call 
+o Single Session 
+o Personal Health Blueprint 
+o Management Package 
+o Lab Review 
+• For Organizations 
+• Shop 
+• Health Assessment 
+• About 
+• Contact 
+PAGE-BY-PAGE REQUIREMENTS 
+PAGE 1 — HOME 
+Section 1: Hero 
+Background: Muted Sage (#7A8F7B) Text color: Charcoal (#2E2E2E) Image: To be sourced by 
+web designer 
+Headline: Staying healthy doesn't have to be so hard 
+Subtext: We use what you do know to tell you what you don't know — to achieve your optimal 
+health. We analyze your lab results, lifestyle, and daily habits to uncover the patterns affecting 
+your health — and give you a structured plan you can follow. 
+Buttons: 
+• Book a Discovery Call (Orange #F47C2A) 
+• Take Assessment (Orange #F47C2A) 
+Reference: https://www.parsleyhealth.com — "Care that helps you feel better and stay well" 
+Section 2: The Gap in Nigeria Today 
+Background: Warm Beige (#EFEAE4) Text color: Charcoal (#2E2E2E) Image: To be sourced by 
+web designer Buttons: Orange (#F47C2A) 
+Section title: UNDERSTAND THE GAP IN NIGERIA TODAY 
+Stat 1: 30%+ of deaths in Nigeria are linked to chronic health conditions. Many of these 
+conditions develop over time — driven by daily habits, environment, and long-term 
+physiological patterns. 
+Stat 2: 70%+ of routine health screenings provide results without structured lifestyle guidance 
+or follow-up. Detection is increasing, but interpretation and practical direction are still limited. 
+Stat 3: 80%+ of healthcare interactions focus on symptom management rather than underlying 
+causes. Without addressing root drivers, many conditions persist, recur, or progress. 
+Reference: https://www.parsleyhealth.com — "Why root-cause healthcare matters" 
+Section 3: The Salvere Approach 
+Background: Warm Beige (#EFEAE4) Text color: Charcoal (#2E2E2E) Buttons: Orange (#F47C2A) 
+Section title: THE SALVERE APPROACH 
+Intro text: Your health is not defined by a single result, symptom, or diagnosis. It is shaped by 
+patterns. 
+Two-column layout: 
+Left column — Most approaches focus on: 
+• Isolated lab values 
+• Individual symptoms 
+• Short-term fixes 
+At Salvere, we take a different approach. We connect: 
+• Lab results 
+• Lifestyle and habits 
+• Nutrition and hydration 
+• Body patterns 
+To understand: 
+• What is happening 
+• Why it is happening 
+• What to do next 
+Right column — Flow diagram (clean icons and arrows): Lab Results → Daily Habits → Body 
+Patterns → Action Plan 
+Closing line: When these pieces are connected, your next steps become clear. 
+Reference: https://www.parsleyhealth.com — "Why root-cause healthcare matters" 
+Section 4: Who We Help 
+Background: Warm Beige (#EFEAE4) Text color: Charcoal (#2E2E2E) Images: To be sourced by 
+web designer where relevant Buttons: Orange (#F47C2A) 
+Section title: WHO WE HELP Intro: Does any of these describe your current realities? 
+Conditions listed (displayed as cards or icon-list): 
+1. Digestive and Gut Health — Bloating, constipation, reflux, or ongoing digestive 
+discomfort, especially when symptoms persist despite treatment. 
+2. Metabolic Health — Weight challenges, blood sugar imbalance, or insulin resistance, 
+where daily habits play a key role. 
+3. Heart and Cardiovascular Health — Early changes in blood pressure, cholesterol, or 
+circulation that require deeper lifestyle understanding. 
+4. Hormonal Health — Hormonal imbalances affecting weight, energy, mood, acne, 
+irregular cycles, hair loss, insulin resistance, and PCOS, often influenced by lifestyle 
+patterns. 
+5. Fertility, Pregnancy, and Postpartum — Support during preconception, pregnancy, or 
+postpartum, with a focus on nutrition, stability, and overall health. 
+6. Neurological and Brain Health — Neurological instability where hydration, nutrition, and 
+internal balance matter. 
+7. Stress, Sleep, and Mental Wellbeing — Anxiety, poor sleep, or chronic stress, especially 
+when there are underlying physiological contributors. 
+8. Early Lab Abnormalities — Kidney, liver, blood markers, or other results that are slightly 
+off but not clearly explained. 
+9. Chronic and Inflammatory Conditions — Ongoing conditions where symptoms are 
+managed but root patterns are not fully addressed. 
+10. Unexplained or Persistent Symptoms — When everything appears normal but you still 
+don't feel well, and need a deeper, structured approach. 
+Closing line: If you see yourself in any of these... 
+Buttons: 
+• Discovery Call 
+• Take Assessment 
+Reference: https://www.parsleyhealth.com — "Root-cause care for complex health and lasting 
+vitality" 
+Section 5: Services 
+Background: Soft White (#F9F9F7) Text color: Charcoal (#2E2E2E) Icons: To be sourced by web 
+designer Buttons: Orange (#F47C2A) 
+Section intro: Our approach is structured to meet you where you are — whether you're just 
+starting or ready for deeper support. 
+Cards: 
+Card 1 — Discovery Call Start here if you're unsure where to begin. We understand your current 
+situation, review your concerns, and guide you on the most appropriate next step. Benefit: 
+Clarity on what to do next CTA: Learn More 
+Card 2 — Single Session A focused consultation where we analyze your health history, food 
+patterns, and lab results to identify root causes. Benefit: Understand what is happening and why 
+CTA: Learn More 
+Card 3 — Salvere Personal Health Blueprint (FEATURED — MOST IMPORTANT) A personalized, 
+structured plan you can follow daily, based on your labs, lifestyle, and health patterns. Benefit: A 
+clear roadmap for improving your health CTA: Learn More 
+Card 4 — Management Package Ongoing support with regular sessions, guidance, and 
+adjustments as your health improves. Benefit: Consistent support and accountability CTA: Learn 
+More 
+Closing note: Not sure where to start? Take our quick assessment or click Start Here for better 
+clarity. 
+Buttons: 
+• Take Assessment 
+• Start Here 
+Reference: https://www.parsleyhealth.com — "Three ways to start fixing the root cause today" 
+Section 6: Reviews / Testimonials 
+Title: Inside Salvere (Real Stories) Include customer testimonials. Content to be provided by 
+client. 
+Section 7: For Organizations 
+Background: Warm Beige (#EFEAE4) Text color: Charcoal (#2E2E2E) Images: To be sourced by 
+web designer Buttons: Orange (#F47C2A) 
+Headline: Most organizations invest in employee health screenings. Few translate the results 
+into meaningful action. 
+Flow: Employees complete tests → Results are delivered → No action 
+Key line: We bridge the gap between health data and real-life action. 
+What we do: 
+• Interpret lab results 
+• Identify early patterns 
+• Provide structured guidance 
+Closing: Health screenings are only the first step. Action is what changes outcomes. 
+Buttons: 
+• Explore Corporate Solutions 
+• Request a Consultation 
+Reference: https://www.parsleyhealth.com — "Root-cause care for complex health and lasting 
+vitality" 
+PAGE 2 — START HERE 
+Reference: https://www.parsleyhealth.com/labs/how-it-works Color: Designer's choice for 
+background Text: Charcoal (#2E2E2E) Buttons: Orange (#F47C2A) 
+Section intro: Not Sure Where to Begin? We'll guide you to the right starting point based on 
+your current situation. 
+Headline: Let's decide which package fits you best. 
+Intro paragraph: Most people come to us with lab results they don't fully understand, a 
+diagnosis without a clear plan, or a general sense that something isn't right. Choose the option 
+below that best describes you, and we'll show you the next step. 
+Option 1 — You Have Lab Results You Don't Fully Understand You've done your tests and 
+received your results, but you don't know what they mean for your daily life or what to do next. 
+Recommended next step: Understand My Labs CTA: Book Understand My Labs 
+Option 2 — You Have a Diagnosis But No Clear Plan You know what the condition is, but not 
+how to manage it through your daily habits, nutrition, or lifestyle. Recommended next step: 
+Salvere Personal Health Blueprint CTA: Book Blueprint 
+Option 3 — You Want to Understand What's Going On First You're not sure what the issue is yet, 
+but you want clarity before taking further steps. Recommended next step: Discovery Call CTA: 
+Book a Discovery Call 
+Option 4 — You Want Ongoing Support and Guidance You already have some understanding, 
+but want structured support, accountability, and continuous improvement. Recommended next 
+step: Salvere Management Package CTA: Explore Ongoing Support 
+Still Unsure? Start Simple. If you're not sure which option is right for you, start with a Discovery 
+Call. We'll help you understand your situation and guide you to the most appropriate next step. 
+CTA: Start With a Discovery Call 
+Prefer a Quick First Step? Take a short assessment to get an initial understanding of patterns in 
+your health and what may need attention. CTA: Take Assessment 
+PAGE 3 — SERVICES (WORK WITH US) 
+Reference: https://aurora-fluid-demo.squarespace.com/services 
+Discovery Call — ₦25,000 
+Description: This is the first step in working with Salvere. The Discovery Call is designed to 
+understand your current health concerns, your goals, and what matters most to you. It helps 
+determine the most appropriate next step based on your unique situation. 
+During this session: 
+• Discuss your current health challenges 
+• Understand your expectations and priorities 
+• Identify potential areas of concern 
+• Guide you on the best way to proceed 
+What Happens After: 
+• Access to onboarding documents (consent and confidentiality) 
+• A comprehensive health intake form 
+• A 3-day food journal to complete 
+• Guidance on any lab tests required (if applicable) 
+Single Session — ₦50,000 
+Description: A focused, one-time consultation designed to help you understand the root causes 
+of your current health concerns. 
+Before your session, you will complete: 
+• Detailed health forms 
+• A 3-day food journal 
+• Any requested lab tests 
+What You Get: 
+• A comprehensive root cause analysis 
+• Clear explanation of what is happening in your body 
+• Identification of key contributing factors 
+• Practical next steps you can begin immediately 
+Best for: Those who want clarity and direction without ongoing support. 
+Salvere Personal Health Blueprint — ₦80,000 
+Description: A personalized, structured health plan designed to help you take clear, practical 
+steps toward improving your health. This package goes beyond a session — it gives you a 
+documented, actionable guide you can follow daily. 
+What's Included: 
+• Comprehensive root cause analysis based on health forms, food journal, and lab results 
+• Personalized Health Blueprint (downloadable) — includes explanation of your current 
+health state, identified root causes, and a clear structured action plan 
+• Therapeutic Nutrition Plan — personalized meal structure and food recommendations 
+tailored to your condition 
+• Supplement and Lifestyle Protocol — targeted supplement guidance, daily habits and 
+routines to support recovery 
+• One Deep-Dive Session — we walk you through your plan so you fully understand it and 
+can implement confidently 
+Best for: Those who want a clear roadmap they can follow independently. 
+Salvere Management Package — ₦150,000 per month 
+Description: Ongoing, structured support for individuals who want consistent guidance, 
+accountability, and adjustments as their health improves. 
+What's Included: 
+• Comprehensive root cause analysis 
+• Personalized Health Blueprint (downloadable) — includes root cause insights, 
+therapeutic meals, supplement plan, and lifestyle protocol 
+• Ongoing support — we guide you through implementation and adjustments 
+• Four sessions per month — weekly check-ins, progress tracking, and plan adjustments 
+based on your response 
+Best for: Those who want close guidance, accountability, and continuous improvement. 
+How to Choose: 
+• Start with Discovery Call if you're unsure where to begin 
+• Choose Single Session if you want clarity and next steps 
+• Choose Personal Health Blueprint if you want a structured plan to follow 
+• Choose Management Package if you want ongoing support and guidance 
+Closing line: At Salvere, we don't just tell you what's wrong — we help you understand why it's 
+happening and what to do about it. 
+Understand My Labs — ₦40,000 
+Description: A focused session designed to help you understand what your lab results actually 
+mean from a functional perspective, and what to do next. Many people receive lab results but 
+are left without clear interpretation or practical guidance. 
+Who This Is For: 
+• You have recent lab results you don't fully understand 
+• You've been told everything is normal but still feel concerned 
+• You have noticed abnormal values but were not given clear direction 
+• You want to act early before issues progress 
+What's Included: 
+• Lab Interpretation — detailed review of each result, what is within range, and early 
+patterns or warning signs 
+• Contextual Analysis — connecting results to your symptoms, lifestyle, and nutrition 
+• Clear Explanation — what is happening, what may be contributing, and what to focus on 
+• Practical Next Steps — actionable guidance, lifestyle and habit recommendations, and 
+direction on what to do next 
+Outcome: You move from confusion to clarity to action. 
+Note: This service focuses on interpretation and guidance. For a fully structured, personalized 
+plan, the Salvere Personal Health Blueprint is recommended. 
+CTA: Understand My Lab Results 
+PAGE 4 — FOR ORGANIZATIONS 
+Reference: Use the same design idea as the Home page. Background: Warm Beige (#EFEAE4) 
+Text: Charcoal (#2E2E2E) Buttons: Orange (#F47C2A) 
+Headline: Your Employees Are Getting Tested — But Are You Acting on the Results? 
+Subtext: We help organizations turn routine health screenings into actionable insights that 
+improve employee health, reduce risk, and prevent long-term complications. 
+Buttons: 
+• Book a Corporate Consultation 
+• Request a Proposal 
+Problem Statement 
+Most Workplace Health Screenings Stop at Detection. 
+Many organizations invest in annual medical checks and routine lab tests. But after results are 
+delivered, no structured interpretation is provided, employees are left confused, and early 
+warning signs are ignored. This creates a gap between detection and intervention. 
+What Happens When Early Signs Are Ignored: 
+• Preventable conditions progress 
+• Productivity declines over time 
+• Absenteeism increases 
+• Long-term healthcare costs rise 
+By the time symptoms appear, intervention becomes more complex and expensive. 
+Case Insight: A Preventable Risk Hidden in Routine Results 
+An employee underwent a standard workplace health screening. Early signs of kidney strain, 
+hypertension, and metabolic health issues were present. No structured follow-up was provided. 
+No actionable guidance was given. 
+Through Salvere intervention: 
+• Root causes were identified (hydration and lifestyle patterns) 
+• Practical corrections were implemented 
+• Risk progression was reduced 
+A potential long-term condition was addressed early. 
+What We Do 
+We Bridge the Gap Between Testing and Action. 
+Most providers deliver lab results. Salvere translates results into practical, real-life interventions. 
+Our approach connects: 
+• Lab results 
+• Employee lifestyle 
+• Daily habits 
+• Underlying physiological patterns 
+To provide: 
+• Clear understanding 
+• Early intervention 
+• Structured guidance 
+Our Corporate Solutions 
+1. Post-Screening Corporate Consultation Program We support employees after routine 
+health checks by interpreting lab results in context, identifying early risk patterns, and 
+providing clear next steps. Delivered as individual sessions or group-based education. 
+2. Employee Health Blueprint Program (Downloadable) Employees receive personalized 
+health reports, nutrition and lifestyle guidance, and practical implementation strategies 
+focused on sustainable improvement. 
+3. Ongoing Health Support (Optional) For organizations seeking continuous engagement — 
+monthly employee sessions, progress tracking, and ongoing guidance. 
+Who This Is For: 
+• Organizations conducting annual health screenings 
+• Companies looking to reduce long-term health risks 
+• Teams experiencing fatigue, burnout, or declining performance 
+• Employers who want proactive, not reactive, health strategies 
+Business Benefits — Why This Matters for Your Organization: 
+• Early risk identification reduces future costs 
+• Healthier employees perform better 
+• Reduced absenteeism 
+• Improved employee wellbeing and morale 
+This is not just health support — it is risk management. 
+How It Works: 
+Step 1 — Initial Consultation: We understand your organization's needs and structure. Step 2 — 
+Program Design: We tailor a solution based on your workforce. Step 3 — Implementation: We 
+work with employees through structured sessions. Step 4 — Ongoing Support (Optional): 
+Continuous engagement and monitoring. 
+Why Salvere 
+A Different Approach to Workplace Health. 
+We don't replace medical care. We help employees understand their results, translate data into 
+action, and support early intervention. From screening to meaningful outcomes. 
+Final CTA 
+Headline: Don't Let Health Screenings End at Results. Subtext: Turn your organization's health 
+data into real, preventive action. 
+Buttons: 
+• Book a Corporate Consultation 
+• Request a Proposal 
+PAGE 5 — HEALTH ASSESSMENT 
+Background: Designer's choice Text: Charcoal (#2E2E2E) Buttons: Orange (#F47C2A) 
+Headline: Understand What Your Body May Be Telling You 
+Subtext: Take a short assessment to identify patterns in your health, lifestyle, and daily habits — 
+and gain clarity on what may be affecting your overall well-being. 
+CTA: Start Assessment 
+What This Assessment Does 
+This is not a diagnosis. It is a structured way to help you: 
+• Identify patterns in your health 
+• Understand how your daily habits may be influencing your body 
+• Highlight areas that may need attention 
+• Gain clarity on your next steps 
+What We Assess 
+Key areas assessed: 
+• Your current symptoms and concerns 
+• Your eating patterns and nutrition 
+• Your hydration habits 
+• Your sleep and daily routines 
+• Your energy levels and stress patterns 
+• Any available lab results (optional) 
+Why This Matters 
+Many people have information about their health but not a clear understanding of how it all 
+connects. This assessment helps you see patterns more clearly, understand what may be 
+contributing to your current state, and move from uncertainty to direction. 
+What You'll Receive 
+After completing the assessment, you will receive: 
+• A summary of key patterns identified 
+• Guidance on areas that may need attention 
+• Suggested next steps based on your responses 
+What Happens After 
+Once you complete your assessment, you can: 
+• Book a Discovery Call to explore your results further 
+• Proceed to a personalized health plan 
+• Begin implementing the suggested steps 
+CTA: Start Assessment 
+Note: This assessment is not a medical diagnosis. It is designed to provide insight and guidance 
+based on your responses. 
+Closing line: At Salvere, we help you understand what is happening in your body, why it is 
+happening, and what to do about it — using a structured, root-cause approach. 
+PAGE 6 — ABOUT 
+Reference: https://www.parsleyhealth.com/company 
+The Story Behind Salvere 
+Salvere was founded from a place of observation, experience, and a desire to do things 
+differently. 
+As a pharmacist, our founder worked closely with individuals living with chronic health 
+conditions — dispensing medications and seeing, firsthand, the realities that came with them. 
+Over time, something became difficult to ignore. Many people were not just managing their 
+conditions — they were also managing the side effects of long-term medication. And for many, 
+the idea of depending on these medications indefinitely, with little focus on underlying causes, 
+raised an important question: Could more be done earlier? 
+This question led to a deeper exploration of lifestyle, nutrition, and the body's internal 
+environment. 
+A Personal Journey 
+Before her own body showed any signs of chronic imbalance, she began to apply what she was 
+learning. She focused on supporting her body through nutrition, maintaining internal balance 
+through daily habits, and building a lifestyle that prioritized long-term health. 
+This approach became even more evident during pregnancy. Without relying on conventional 
+prenatal supplements, which she could not tolerate, she focused on high-quality, nutrient-dense 
+foods and a supportive lifestyle. Her experience was steady and uncomplicated. She maintained 
+her health throughout pregnancy, delivered safely, and recovered well — eventually raising two 
+healthy boys. For her, this was not just theory. It was lived experience. 
+From Practice to Purpose 
+What started as personal application became something more. Over the years, she began 
+helping others adopt similar principles — guiding individuals and families toward better health 
+through practical, everyday changes. Through education, consultations, and content, she has 
+reached and supported hundreds — and indirectly, thousands — of people seeking a more 
+structured approach to their health. In 2020, her work evolved further with formal training in 
+functional medicine, deepening her ability to connect symptoms, lab results, and lifestyle 
+patterns into clear, actionable plans. 
+The Salvere Approach 
+At the core of Salvere is a simple idea: Health improves when you understand what is driving it. 
+We connect: 
+• Lab results 
+• Lifestyle and daily habits 
+• Nutrition and hydration 
+• Patterns within the body 
+To help you understand: 
+• What is happening 
+• Why it is happening 
+• What to do next 
+Working Alongside Your Care 
+Salvere does not replace medical care. We work alongside it — helping you understand your 
+results more clearly, prepare for better conversations with your doctor, and take practical steps 
+that support your overall health. 
+Why Salvere 
+Salvere is derived from Latin, meaning to be in good health. This platform was created to bring a 
+more practical, contextual, and accessible approach to health — especially within a Nigerian 
+setting. One that speaks your language. One that considers your reality. One that gives you 
+something you can actually follow. 
+Who This Is For 
+Salvere is for individuals who: 
+• Have lab results or diagnoses but want deeper understanding 
+• Want a structured, thoughtful approach to their health 
+• Prefer clarity over guesswork 
+• Are ready to take practical steps toward improvement 
+PAGE 7 — CONTACT 
+Headline: Get in Touch Subtext: If you have a question, need guidance, or are unsure where to 
+begin, we're here to help. 
+Contact Form Fields: 
+• Full Name 
+• Email Address 
+• Phone Number (optional but recommended for Nigeria) 
+• What best describes you? (dropdown) — options: I have lab results / I have a diagnosis / 
+I'm not sure where to start / Corporate inquiry 
+• Message 
+Button: Send Message (Orange #F47C2A) 
+Under button: We typically respond within 24–48 hours. 
+Above or beside the form: Prefer a faster option? 
+• Book a Discovery Call 
+• Start Here 
+• Take Assessment 
+PAGE 8 — USER DASHBOARD (CLIENT PORTAL) 
+This is an internal page for logged-in clients. 
+Dashboard Header 
+Displays: 
+• Client first name (e.g., "Johnson's Salvere Dashboard") 
+• Current program: Free / Blueprint / Management / Lab Review 
+• Status: Active / Inactive 
+At a Glance: 
+• Last update 
+• Next session date 
+• Key focus area 
+My Plan Section 
+All plan subsections must include: 
+• View online (not just download) 
+• Download option 
+• Version history (if updated) 
+Subsections: 
+A. Health Overview 
+B. Nutrition Plan 
+• Meal Guide 
+• Key food guidelines 
+• Weekly grocery checklist 
+C. Supplement Protocol 
+• What to take 
+• When to take 
+• Duration 
+D. Lifestyle Protocol 
+• Hydration 
+• Sleep 
+• Daily habits 
+My Progress Section 
+A. Health Metrics User can input: 
+• Blood pressure 
+• Blood sugar 
+• Weight 
+• Energy level (rating 1 to 5) 
+• Sleep quality (rating 1 to 5) 
+Each entry includes: Date and Notes. 
+B. Visual Display 
+• Simple graphs 
+• Trends over time 
+• Designed to feel real and motivating 
+C. Update Button: "Add New Entry" 
+Food Journal 
+Format: 
+• Daily log 
+• Each entry: Date, Time, Food, Notes 
+Documents and Forms 
+Includes: 
+• Intake forms 
+• Uploaded lab results 
+• Signed documents 
+Everything in one place. 
+My Supplements 
+Shows: 
+• Current supplements 
+• Dosage 
+• Duration 
+• Link to reorder from store 
+Sessions and Support 
+Shows: 
+• Upcoming sessions 
+• Past sessions 
+• Session notes (optional) 
+Notifications (Optional) 
+• Reminder to log data 
+• Supplement reminders 
+• Session reminders 
+User Flow (Critical) 
+When a client logs in, they should immediately see: 
+• Their plan 
+• Their progress 
+• What to do next 
+They should NOT see: 
+• Forms everywhere 
+• Too many options at once 
+Dashboard Layout 
+Sidebar (left): 
+• Dashboard 
+• My Plan 
+• Progress 
+• Food Journal 
+• Supplements 
+• Documents 
+• Sessions 
+Main Screen (right): 
+• Selected content 
+Key Design Principles for Dashboard: 
+1. Simple — clean, uncluttered layout 
+2. Guided — always show the user what to do next 
+3. Calm — generous white space, minimal colors, orange used only for action buttons 
+End of Salvere Website PDR 

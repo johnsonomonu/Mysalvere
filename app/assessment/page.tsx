@@ -1,6 +1,7 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { AssessmentWizard } from "@/components/assessment/assessment-wizard"
+import { AssessmentIntro } from "@/components/assessment/assessment-intro"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -10,9 +11,10 @@ export const metadata: Metadata = {
 
 export default function AssessmentPage() {
   return (
-    <main className="min-h-screen bg-[#F5F5F4]">
+    <main className="min-h-screen bg-[var(--soft-white)]">
       <Header />
-      <div className="pt-24 pb-16">
+      <AssessmentIntro />
+      <div id="assessment-wizard" className="py-24 bg-[var(--soft-white)]">
         <AssessmentWizard />
       </div>
       <Footer />

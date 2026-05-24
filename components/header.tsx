@@ -11,10 +11,12 @@ import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 
 const navigation = [
-  { name: "About", href: "/about" },
+  { name: "Start Here", href: "/start-here" },
   { name: "Services", href: "/services" },
-  { name: "Blog", href: "/blog" },
+  { name: "For Organizations", href: "/for-organizations" },
   { name: "Assessment", href: "/assessment" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
 ]
 
 export function Header() {

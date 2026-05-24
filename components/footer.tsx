@@ -4,13 +4,15 @@ import { Twitter, Instagram, Linkedin, ArrowRight } from "lucide-react"
 const footerLinks = {
   company: [
     { name: "About", href: "/about" },
-    { name: "How We Work", href: "/services" },
+    { name: "Services", href: "/services" },
+    { name: "For Organizations", href: "/for-organizations" },
     { name: "Contact", href: "/contact" },
   ],
   resources: [
+    { name: "Start Here", href: "/start-here" },
     { name: "Assessment", href: "/assessment" },
     { name: "Dashboard", href: "/dashboard" },
-    { name: "Blog", href: "/blog" },
+    { name: "Shop", href: "#" },
   ],
   legal: [
     { name: "Privacy Policy", href: "/privacy" },

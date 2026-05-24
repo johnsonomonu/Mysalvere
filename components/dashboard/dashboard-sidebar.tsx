@@ -14,12 +14,21 @@ import {
   CreditCard,
   Shield,
   LogOut,
+  FileText,
+  TrendingUp,
+  Utensils,
+  Pill,
+  FolderOpen
 } from "lucide-react"
 
 const navItems = [
-  { label: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Appointments", href: "/dashboard/appointments", icon: CalendarDays },
-  { label: "Payments", href: "/dashboard/payments", icon: CreditCard },
+  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "My Plan", href: "/dashboard/my-plan", icon: FileText },
+  { label: "Progress", href: "/dashboard/progress", icon: TrendingUp },
+  { label: "Food Journal", href: "/dashboard/food-journal", icon: Utensils },
+  { label: "Supplements", href: "/dashboard/supplements", icon: Pill },
+  { label: "Documents", href: "/dashboard/documents", icon: FolderOpen },
+  { label: "Sessions", href: "/dashboard/sessions", icon: CalendarDays },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
 

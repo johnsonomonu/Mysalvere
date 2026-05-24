@@ -21,12 +21,12 @@ export function TestimonialsSection() {
         <div className="mx-auto max-w-3xl text-center mb-20">
           <FadeInUp>
             <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[var(--warm-beige)] text-[var(--muted-sage)] text-xs font-bold uppercase tracking-widest mb-6 border border-[var(--muted-sage)]/20">
-              Real Results
+              Real Stories
             </div>
           </FadeInUp>
           <FadeInUp delay={0.1}>
             <h2 className="font-serif text-4xl font-medium tracking-tight text-[var(--charcoal)] sm:text-5xl text-balance">
-              Testimonials From Real People
+              Inside Salvere
             </h2>
           </FadeInUp>
         </div>

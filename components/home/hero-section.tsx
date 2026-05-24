@@ -8,7 +8,7 @@ import { BookSessionButton } from "@/components/book-session-button"
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[100dvh] bg-[var(--warm-beige)] pt-24 pb-0 flex flex-col lg:flex-row overflow-hidden">
+    <section className="relative min-h-[100dvh] bg-[var(--muted-sage)] pt-24 pb-0 flex flex-col lg:flex-row overflow-hidden">
       
       {/* Left Column: Text Content */}
       <div className="relative z-10 w-full lg:w-1/2 flex items-center justify-center lg:justify-end px-6 lg:px-12 py-16 lg:py-0">
@@ -21,7 +21,7 @@ export function HeroSection() {
           
           <FadeInUp delay={0.2}>
             <p className="mt-8 text-lg sm:text-xl leading-relaxed text-[var(--charcoal)]/80 max-w-lg font-light text-balance">
-              We help our clients manage chronic illnesses and drug-dependent conditions using natural foods and lifestyle changes.
+              We use what you do know to tell you what you don&apos;t know — to achieve your optimal health. We analyze your lab results, lifestyle, and daily habits to uncover the patterns affecting your health — and give you a structured plan you can follow.
             </p>
           </FadeInUp>
           
@@ -30,7 +30,7 @@ export function HeroSection() {
               <BookSessionButton size="xl" className="w-full sm:w-auto shadow-none font-medium px-8 h-14">
                 Book a Discovery Call
               </BookSessionButton>
-              <Button variant="outline" size="xl" className="w-full sm:w-auto bg-white/80 backdrop-blur-md border-[var(--muted-sage)]/30 text-[var(--charcoal)] hover:bg-[var(--warm-beige)] hover:border-[var(--muted-sage)] transition-all duration-300" asChild>
+              <Button variant="outline" size="xl" className="w-full sm:w-auto bg-white/80 backdrop-blur-md border-[var(--charcoal)]/20 text-[var(--charcoal)] hover:bg-white hover:border-[var(--charcoal)]/40 transition-all duration-300" asChild>
                 <Link href="/assessment">
                   Take Assessment
                 </Link>

@@ -1,8 +1,10 @@
 "use client"
 
 import { FadeInUp, StaggerChildren, StaggerItem, staggerItemVariants } from "@/components/motion"
-import { Phone, Calendar, FileText, Activity, CheckCircle2, Info, Star } from "lucide-react"
+import { Phone, Calendar, FileText, Activity, FlaskConical, CheckCircle2, Info, Star } from "lucide-react"
 import { BookSessionButton } from "@/components/book-session-button"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 import { cn } from "@/lib/utils"
 
 const services = [
@@ -10,69 +12,42 @@ const services = [
     icon: Phone,
     title: "Discovery Call",
     price: "₦25,000",
-    description: "The first step in working with Salvere. We discuss your concerns and determine the best way to proceed.",
-    features: [
-      "Discuss current health challenges",
-      "Understand your expectations",
-      "Identify potential areas of concern",
-      "Guided onboarding process"
-    ],
-    cta: "Book Discovery Call",
-    href: "/book/discovery",
+    description: "Start here if you're unsure where to begin. We understand your current situation, review your concerns, and guide you on the most appropriate next step.",
+    benefit: "Clarity on what to do next",
+    cta: "Learn More",
+    href: "/services#discovery-call",
     featured: false
   },
   {
     icon: Calendar,
     title: "Single Session",
     price: "₦50,000",
-    description: "Ideal if you want clarity and direction without ongoing support.",
-    features: [
-      "Comprehensive root cause analysis",
-      "Filled Forms, food journal & labs analysis",
-      "Clear explanation of findings",
-      "Practical immediate next steps"
-    ],
-    cta: "Book Single Session",
-    href: "/book/single",
+    description: "A focused consultation where we analyze your health history, food patterns, and lab results to identify root causes.",
+    benefit: "Understand what is happening and why",
+    cta: "Learn More",
+    href: "/services#single-session",
     featured: false
   },
   {
     icon: FileText,
-    title: "Salvere Personalized Guide",
+    title: "Personal Health Blueprint",
     price: "₦80,000",
-    description: "A documented, actionable guide you can follow daily independently.",
-    features: [
-      "Comprehensive root cause analysis",
-      "Personalized guide document",
-      "Therapeutic meals & lifestyle protocol",
-      "One deep-dive session"
-    ],
-    cta: "Get Your Guide",
-    href: "/book/guide",
+    description: "A personalized, structured plan you can follow daily, based on your labs, lifestyle, and health patterns.",
+    benefit: "A clear roadmap for improving your health",
+    cta: "Learn More",
+    href: "/services#blueprint",
     featured: true
   },
   {
     icon: Activity,
-    title: "Salvere Management Package",
+    title: "Management Package",
     price: "₦150,000 / month",
-    description: "Continuous care model for consistent guidance and accountability.",
-    features: [
-      "Comprehensive root cause analysis",
-      "Personalized health guide",
-      "Ongoing implementation support",
-      "Four sessions per month"
-    ],
-    cta: "Start Management",
-    href: "/book/management",
+    description: "Ongoing support with regular sessions, guidance, and adjustments as your health improves.",
+    benefit: "Consistent support and accountability",
+    cta: "Learn More",
+    href: "/services#management",
     featured: false
   },
-]
-
-const choosingLogic = [
-  { label: "Start with Discovery Call", text: "if you’re unsure where to begin" },
-  { label: "Choose Single Session", text: "if you want clarity and next steps" },
-  { label: "Choose Personal Health Blueprint", text: "if you want a structured plan to follow" },
-  { label: "Choose Management Package", text: "if you want ongoing support and guidance" },
 ]
 
 export function HowWeWorkSection() {
@@ -92,13 +67,13 @@ export function HowWeWorkSection() {
           </FadeInUp>
           <FadeInUp delay={0.2}>
             <p className="mt-6 text-xl leading-8 text-[var(--charcoal)]/70">
-              At Salvere, we don’t just tell you what’s wrong — we help you understand why it’s happening and what to do about it.
+              Our approach is structured to meet you where you are — whether you&apos;re just starting or ready for deeper support.
             </p>
           </FadeInUp>
         </div>
 
         <StaggerChildren className="mx-auto mt-20 grid max-w-7xl grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <StaggerItem key={service.title} variants={staggerItemVariants} className="h-full">
               <div className={cn(
                 "group flex flex-col h-full rounded-[2.5rem] p-8 transition-all duration-300 relative",
@@ -129,18 +104,14 @@ export function HowWeWorkSection() {
                   {service.price}
                 </p>
                 
-                <p className="text-sm text-[var(--charcoal)]/70 leading-relaxed mb-6">
+                <p className="text-sm text-[var(--charcoal)]/70 leading-relaxed mb-4">
                   {service.description}
                 </p>
 
-                <ul className="space-y-3 mb-8 flex-grow">
-                  {service.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-2 text-[13px] text-[var(--charcoal)]/80">
-                      <CheckCircle2 className={cn("h-4 w-4 shrink-0 mt-0.5", service.featured ? "text-[var(--orange)]" : "text-[var(--muted-sage)]")} />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="flex items-start gap-2 text-sm text-[var(--charcoal)]/80 mb-8 flex-grow">
+                  <CheckCircle2 className={cn("h-4 w-4 shrink-0 mt-0.5", service.featured ? "text-[var(--orange)]" : "text-[var(--muted-sage)]")} />
+                  <span className="font-medium">{service.benefit}</span>
+                </div>
                 
                 <div className="mt-auto pt-6 border-t border-[var(--charcoal)]/10">
                   <BookSessionButton 
@@ -157,25 +128,19 @@ export function HowWeWorkSection() {
           ))}
         </StaggerChildren>
 
-        {/* How to Choose */}
+        {/* Closing Note */}
         <FadeInUp delay={0.6}>
-          <div className="mt-24 max-w-4xl mx-auto bg-[var(--soft-white)] rounded-[3rem] p-10 lg:p-16 border border-[var(--muted-sage)]/10 shadow-sm">
-            <div className="flex items-center gap-4 mb-10">
-              <div className="h-12 w-12 rounded-full bg-[var(--orange)]/10 flex items-center justify-center">
-                <Info className="h-6 w-6 text-[var(--orange)]" />
-              </div>
-              <h3 className="font-serif text-3xl font-medium text-[var(--charcoal)]">How to Choose</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
-              {choosingLogic.map((item, i) => (
-                <div key={i} className="flex flex-col gap-1">
-                  <span className="font-bold text-[var(--charcoal)] flex items-center gap-2">
-                    <div className="h-1.5 w-1.5 rounded-full bg-[var(--orange)]" />
-                    {item.label}
-                  </span>
-                  <span className="text-[var(--charcoal)]/60 text-sm pl-3.5">{item.text}</span>
-                </div>
-              ))}
+          <div className="mt-16 max-w-3xl mx-auto text-center">
+            <p className="text-lg text-[var(--charcoal)]/70 mb-8">
+              Not sure where to start? Take our quick assessment or click Start Here for better clarity.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto border-[var(--charcoal)]/15 text-[var(--charcoal)] hover:bg-white" asChild>
+                <Link href="/assessment">Take Assessment</Link>
+              </Button>
+              <Button variant="outline" size="lg" className="w-full sm:w-auto border-[var(--charcoal)]/15 text-[var(--charcoal)] hover:bg-white" asChild>
+                <Link href="/start-here">Start Here</Link>
+              </Button>
             </div>
           </div>
         </FadeInUp>
