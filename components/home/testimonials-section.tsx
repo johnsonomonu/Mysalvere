@@ -28,26 +28,35 @@ export function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(1) // 1 for right, -1 for left
   const [isPaused, setIsPaused] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const nextTestimonial = useCallback(() => {
     setDirection(1)
+    setIsExpanded(false)
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length)
   }, [])
 
   const prevTestimonial = () => {
     setDirection(-1)
+    setIsExpanded(false)
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length)
   }
 
-  // Auto-scroll every 8 seconds unless paused
+  const goToTestimonial = (index: number) => {
+    setDirection(index > currentIndex ? 1 : -1)
+    setIsExpanded(false)
+    setCurrentIndex(index)
+  }
+
+  // Auto-scroll every 8 seconds unless paused or actively reading expanded text
   useEffect(() => {
-    if (isPaused) return
+    if (isPaused || isExpanded) return
 
     const timer = setInterval(() => {
       nextTestimonial()
     }, 8000)
     return () => clearInterval(timer)
-  }, [nextTestimonial, isPaused])
+  }, [nextTestimonial, isPaused, isExpanded])
 
   const variants = {
     enter: (direction: number) => {
@@ -72,6 +81,10 @@ export function TestimonialsSection() {
       }
     }
   }
+
+  const currentQuote = testimonials[currentIndex].quote;
+  const isLong = currentQuote.length > 150;
+  const displayQuote = (isLong && !isExpanded) ? currentQuote.substring(0, 150) + "..." : currentQuote;
 
   return (
     <section className="py-24 lg:py-32 bg-[#EBE5D9] overflow-hidden border-t border-[#103028]/5" id="testimonials">
@@ -128,11 +141,22 @@ export function TestimonialsSection() {
                     ))}
                   </div>
 
-                  <p className="font-serif text-xl sm:text-2xl lg:text-3xl leading-relaxed text-[#103028] mb-10 text-balance">
-                    "{testimonials[currentIndex].quote}"
-                  </p>
+                  <motion.div layout>
+                    <p className="font-serif text-xl sm:text-2xl lg:text-3xl leading-relaxed text-[#103028] mb-4 text-balance">
+                      "{displayQuote}"
+                    </p>
+                    
+                    {isLong && (
+                      <button 
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className="text-[#FA7A30] font-bold text-xs sm:text-sm uppercase tracking-widest hover:opacity-80 transition-opacity mb-10"
+                      >
+                        {isExpanded ? "Read Less" : "Read More"}
+                      </button>
+                    )}
+                  </motion.div>
                   
-                  <div className="flex flex-col items-center gap-3">
+                  <div className="flex flex-col items-center gap-3 mt-2">
                     <p className="font-medium text-[#103028] text-lg tracking-wide uppercase">
                       — {testimonials[currentIndex].author}
                     </p>
@@ -158,10 +182,7 @@ export function TestimonialsSection() {
               {testimonials.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => {
-                    setDirection(index > currentIndex ? 1 : -1)
-                    setCurrentIndex(index)
-                  }}
+                  onClick={() => goToTestimonial(index)}
                   className={`w-3 h-3 rounded-full transition-all focus:outline-none focus:ring-2 focus:ring-[#FA7A30] focus:ring-offset-2 ${
                     index === currentIndex ? "bg-[#FA7A30] w-8" : "bg-white shadow-sm border border-[#103028]/20 hover:bg-[#103028]/10"
                   }`}
