@@ -5,8 +5,14 @@ import { FadeInUp } from "@/components/motion"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Work With Us | Salvere",
+  title: "Work With Us | Salvere Services",
   description: "We offer structured services to help you understand your patterns, correct imbalances, and build a sustainable lifestyle.",
+  openGraph: {
+    title: "Work With Us | Salvere Services",
+    description: "We offer structured services to help you understand your patterns, correct imbalances, and build a sustainable lifestyle.",
+    url: 'https://salvere.health/services',
+    images: [{ url: '/hero-new.jpg', width: 1200, height: 630, alt: 'Salvere Wellness Services' }],
+  }
 }
 
 export default function ServicesPage() {

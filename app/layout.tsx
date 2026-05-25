@@ -18,10 +18,32 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: 'Salvere | Premium Wellness Platform',
-  description: 'Staying healthy doesn\'t have to be so hard. Discover personalized wellness coaching for chronic health issues.',
+  title: 'Salvere | Premium Wellness & Functional Medicine in Nigeria',
+  description: 'Salvere offers physician-led functional medicine that resolves the root cause of symptoms. Achieve true health through lifestyle guidance, advanced labs, and root-cause resolution.',
   generator: 'v0.app',
-  keywords: ['wellness', 'health', 'coaching', 'chronic health', 'nutrition', 'lifestyle'],
+  keywords: ['functional medicine Nigeria', 'wellness coaching', 'root cause health', 'chronic disease management', 'lifestyle medicine', 'health optimization', 'Salvere', 'Dr. Dew'],
+  openGraph: {
+    title: 'Salvere | Premium Wellness & Functional Medicine',
+    description: 'Physician-led functional medicine that resolves the root cause of your symptoms.',
+    url: 'https://salvere.health',
+    siteName: 'Salvere',
+    images: [
+      {
+        url: '/hero-new.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Salvere - Premium Functional Medicine and Wellness',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Salvere | Premium Wellness & Functional Medicine',
+    description: 'Physician-led functional medicine that resolves the root cause of your symptoms.',
+    images: ['/hero-new.jpg'],
+  },
   icons: {
     icon: [
       {

@@ -7,6 +7,12 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Wellness Assessment | Salvere",
   description: "Take our comprehensive wellness assessment to discover your priority health areas and get personalized recommendations.",
+  openGraph: {
+    title: "Wellness Assessment | Salvere",
+    description: "Take our comprehensive wellness assessment to discover your priority health areas and get personalized recommendations.",
+    url: 'https://salvere.health/assessment',
+    images: [{ url: '/hero-new.jpg', width: 1200, height: 630, alt: 'Salvere Wellness Assessment' }],
+  }
 }
 
 export default function AssessmentPage() {

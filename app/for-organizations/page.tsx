@@ -4,8 +4,14 @@ import { ForOrganizationsContent } from "@/components/for-organizations/for-orga
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "For Organizations | Salvere",
+  title: "For Organizations | Salvere Corporate Wellness",
   description: "Turn routine health screenings into actionable insights that improve employee health, reduce risk, and prevent long-term complications.",
+  openGraph: {
+    title: "For Organizations | Salvere Corporate Wellness",
+    description: "Turn routine health screenings into actionable insights that improve employee health, reduce risk, and prevent long-term complications.",
+    url: 'https://salvere.health/for-organizations',
+    images: [{ url: '/hero-new.jpg', width: 1200, height: 630, alt: 'Salvere Corporate Wellness' }],
+  }
 }
 
 export default function ForOrganizationsPage() {
