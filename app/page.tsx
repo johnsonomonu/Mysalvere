@@ -21,7 +21,6 @@ export default function HomePage() {
       <UnderstandTheGapSection />
       <TheSalvereApproachSection />
       <WhoWeHelpSection />
-      <HowWeWorkSection />
       <TestimonialsSection />
       <CorporateSolutionsSection />
       <FinalCtaSection />

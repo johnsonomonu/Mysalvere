@@ -44,13 +44,13 @@ export function AboutContent() {
             {/* Left: Sticky Image / Info */}
             <div className="lg:col-span-5">
               <FadeInUp className="lg:sticky lg:top-32 space-y-8">
-                <div className="relative rounded-[2.5rem] overflow-hidden aspect-[4/5] shadow-xl">
-                  {/* Placeholder for founder image, use generic for now or real if provided */}
+                <div className="relative rounded-[2.5rem] overflow-hidden aspect-square shadow-xl">
+                  {/* Founder Image */}
                   <Image 
-                    src="/premium_wellness_hero_background_texture_1777598115851.png" 
+                    src="/about-ceo.jpg" 
                     alt="Salvere Founder" 
                     fill 
-                    className="object-cover"
+                    className="object-cover object-top"
                   />
                   <div className="absolute inset-0 bg-[var(--charcoal)]/10 mix-blend-multiply" />
                 </div>
